@@ -1,0 +1,23 @@
+{
+  "name": "pure-n-good-eats",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Pure N Good Eats — Wild forest honey from Villupuram, Tamil Nadu",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "gsap": "^3.13.0",
+    "lenis": "^1.3.4",
+    "ogl": "^1.0.11"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}
