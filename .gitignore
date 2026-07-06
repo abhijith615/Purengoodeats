@@ -3,3 +3,9 @@ dist/
 *.local
 .DS_Store
 Thumbs.db
+
+# Raw source assets (originals stay local; optimized copies live in public/)
+/*.jpeg
+/*.jpg
+/*.png
+/*.mp4

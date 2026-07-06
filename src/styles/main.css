@@ -63,6 +63,12 @@ body::after {
 }
 .skip-link:focus-visible { top: 16px; }
 
+/* Cinematic edge darkening over the hero video */
+.hero-vignette {
+  background: radial-gradient(ellipse 120% 90% at 50% 40%, transparent 55%, rgb(28 16 7 / 0.55) 100%);
+}
+#hero-video { will-change: transform; }
+
 /* ============ CURSOR ============ */
 @media (pointer: fine) {
   .cursor {
@@ -251,18 +257,58 @@ header.is-solid .btn-icon:hover { color: var(--color-forest-honey); }
   .story-step:nth-child(odd) .story-step-copy { margin-left: 0; }
 }
 
-/* ============ COMMUNITY PORTRAITS ============ */
-.portrait__art {
-  border-radius: 1rem;
+/* ============ IMAGE REVEALS (photography) ============ */
+/* Masked photo reveal: the frame unclips upward while the image inside
+   settles from a gentle zoom. Initial hidden state is applied by GSAP,
+   so content stays visible for no-JS and reduced-motion users. */
+.img-reveal {
+  position: relative;
   overflow: hidden;
-  aspect-ratio: 5 / 6;
-  clip-path: inset(100% 0 0 0); /* revealed by GSAP */
+  border-radius: 1.25rem;
 }
-.portrait__caption {
-  margin-top: 0.75rem;
+.img-reveal img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+.img-caption {
+  margin-top: 0.85rem;
+  font-family: var(--font-sans);
   font-size: 0.8rem;
+  font-weight: 300;
   letter-spacing: 0.05em;
-  color: color-mix(in srgb, var(--color-cream) 70%, transparent);
+  color: rgb(43 26 14 / 0.55);
+}
+#community .img-caption {
+  color: color-mix(in srgb, var(--color-cream) 60%, transparent);
+}
+
+.story-img { aspect-ratio: 1 / 1; }
+.story-img img { transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+.story-step:hover .story-img img { transform: scale(1.04); }
+
+.community-img { box-shadow: 0 30px 80px rgb(0 0 0 / 0.35); }
+
+/* Full-bleed cinematic divider */
+#divider-img { will-change: transform; }
+
+/* Signature banner in the shop */
+.signature-banner {
+  aspect-ratio: 21 / 9;
+  border-radius: 1.5rem;
+}
+.signature-banner img { height: 100%; }
+.signature-banner__caption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: 3rem 2.5rem 2rem;
+  background: linear-gradient(to top, rgb(28 16 7 / 0.75), transparent);
+}
+@media (max-width: 640px) {
+  .signature-banner { aspect-ratio: 4 / 3; }
 }
 
 .dot {
@@ -307,6 +353,17 @@ header.is-solid .btn-icon:hover { color: var(--color-forest-honey); }
   flex-direction: column;
   justify-content: center;
 }
+.feature-card--photo {
+  padding: 0;
+  overflow: hidden;
+}
+.feature-card--photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.feature-card--photo:hover img { transform: scale(1.06); }
 .feature-icon {
   width: 40px;
   height: 40px;
@@ -348,40 +405,35 @@ header.is-solid .btn-icon:hover { color: var(--color-forest-honey); }
 
 .product-card__stage {
   position: relative;
-  display: grid;
-  place-items: center;
+  overflow: hidden;
+  border-radius: 1rem;
   aspect-ratio: 1 / 1;
   transform-style: preserve-3d;
 }
-.product-jar {
-  position: relative;
-  z-index: 2;
-  transform: translateZ(40px);
-  will-change: transform;
-  filter: drop-shadow(0 20px 30px rgb(0 0 0 / 0.35));
+/* Each card zooms into its own jar within the shared trio photograph.
+   --jar-pos / --jar-zoom are set per card in the markup. */
+.product-photo {
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/jars-trio.jpg');
+  background-size: var(--jar-zoom, 200%);
+  background-position: var(--jar-pos, 50% 50%);
+  background-repeat: no-repeat;
+  transform: translateZ(30px) scale(1.06); /* depth layer for the tilt */
+  will-change: transform, background-position;
+  transition: filter 0.5s;
 }
+.product-card:hover .product-photo { filter: saturate(1.12) brightness(1.05); }
 .product-card__glow {
   position: absolute;
-  inset: 12%;
-  border-radius: 999px;
-  background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 40%), rgb(245 185 66 / 0.35), transparent 65%);
-  filter: blur(20px);
+  inset: 0;
+  background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 40%), rgb(245 185 66 / 0.28), transparent 60%);
+  mix-blend-mode: soft-light;
   transition: opacity 0.4s;
-  opacity: 0.6;
+  opacity: 0.5;
+  pointer-events: none;
 }
 .product-card:hover .product-card__glow { opacity: 1; }
-.product-card__shadow {
-  position: absolute;
-  bottom: 8%;
-  width: 50%;
-  height: 14px;
-  border-radius: 999px;
-  background: rgb(0 0 0 / 0.45);
-  filter: blur(10px);
-  will-change: transform, opacity;
-}
-
-.jar-honey-wave { will-change: transform; }
 
 .qty {
   display: flex;
@@ -609,6 +661,5 @@ a.contact-row:hover { padding-left: 0.75rem; border-color: var(--color-honey); }
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .portrait__art { clip-path: none; }
   .feature-icon .draw { stroke-dashoffset: 0; }
 }

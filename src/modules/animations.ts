@@ -27,11 +27,12 @@ export function initAnimations(_lenis: Lenis | null, reduced: boolean): void {
   scrollHint();
   storyTimeline();
   communityJourney();
+  imageReveals();
+  dividerParallax();
   featureCards();
   staggerGroups();
   testimonialScrub();
   counters();
-  jarSlosh();
 }
 
 /* ---------------------------------------------------------------- header */
@@ -215,25 +216,53 @@ function communityJourney(): void {
     }
   );
 
-  // Portraits unveil from the bottom, like photographs being developed.
-  document.querySelectorAll<HTMLElement>('[data-portrait] .portrait__art').forEach((art) => {
-    gsap.to(art, {
-      clipPath: 'inset(0% 0 0 0)',
-      duration: 1.2,
-      ease: 'power4.inOut',
-      scrollTrigger: { trigger: art, start: 'top 85%' },
-    });
-    // Gentle parallax drift inside the frame.
+}
+
+/* ------------------------------------------------- photography reveals */
+/**
+ * Signature move for every photograph: the frame unclips upward while the
+ * image inside settles from a zoom, then drifts gently in parallax as it
+ * crosses the viewport. Way more cinematic than a fade.
+ */
+function imageReveals(): void {
+  document.querySelectorAll<HTMLElement>('[data-img-reveal]').forEach((frame) => {
+    const img = frame.querySelector('img');
+    if (!img) return;
+
+    gsap.set(frame, { clipPath: 'inset(100% 0% 0% 0%)' });
+    gsap.set(img, { scale: 1.25 });
+
+    gsap
+      .timeline({ scrollTrigger: { trigger: frame, start: 'top 82%' } })
+      .to(frame, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.3, ease: 'power4.inOut' })
+      .to(img, { scale: 1, duration: 1.6, ease: 'power3.out' }, '<0.1');
+
+    // Continuous micro-parallax inside the frame while scrolling past.
     gsap.fromTo(
-      art.firstElementChild,
-      { yPercent: -6, scale: 1.12 },
+      img,
+      { yPercent: -5 },
       {
-        yPercent: 6,
+        yPercent: 5,
         ease: 'none',
-        scrollTrigger: { trigger: art, start: 'top bottom', end: 'bottom top', scrub: true },
+        scrollTrigger: { trigger: frame, start: 'top bottom', end: 'bottom top', scrub: true },
       }
     );
   });
+}
+
+/* ------------------------------------------- cinematic quote divider */
+function dividerParallax(): void {
+  const img = document.getElementById('divider-img');
+  if (!img) return;
+  gsap.fromTo(
+    img,
+    { yPercent: -12 },
+    {
+      yPercent: 4,
+      ease: 'none',
+      scrollTrigger: { trigger: '#divider', start: 'top bottom', end: 'bottom top', scrub: true },
+    }
+  );
 }
 
 /* ------------------------------------------------------- feature cards */
@@ -332,21 +361,6 @@ function counters(): void {
       onUpdate: () => {
         el.textContent = Math.round(state.value).toLocaleString('en-IN');
       },
-    });
-  });
-}
-
-/* -------------------------------------------- honey slosh inside jars */
-function jarSlosh(): void {
-  document.querySelectorAll<SVGElement>('.jar-honey-wave').forEach((wave, i) => {
-    gsap.to(wave, {
-      x: 5,
-      scaleY: 1.25,
-      duration: 2.6 + i * 0.4,
-      repeat: -1,
-      yoyo: true,
-      ease: 'sine.inOut',
-      transformOrigin: 'center',
     });
   });
 }

@@ -18,11 +18,9 @@ export function initTilt(reduced: boolean): void {
     const rx = gsap.quickTo(card, 'rotationX', { duration: 0.7, ease: 'power3' });
     const ry = gsap.quickTo(card, 'rotationY', { duration: 0.7, ease: 'power3' });
 
-    const jar = card.querySelector<HTMLElement>('.product-jar');
-    const shadow = card.querySelector<HTMLElement>('.product-card__shadow');
-    const jarX = jar ? gsap.quickTo(jar, 'x', { duration: 0.9, ease: 'power3' }) : null;
-    const jarR = jar ? gsap.quickTo(jar, 'rotation', { duration: 0.9, ease: 'power3' }) : null;
-    const shX = shadow ? gsap.quickTo(shadow, 'x', { duration: 0.9, ease: 'power3' }) : null;
+    const photo = card.querySelector<HTMLElement>('.product-photo');
+    const phX = photo ? gsap.quickTo(photo, 'x', { duration: 0.9, ease: 'power3' }) : null;
+    const phY = photo ? gsap.quickTo(photo, 'y', { duration: 0.9, ease: 'power3' }) : null;
 
     card.addEventListener('pointermove', (e) => {
       const r = card.getBoundingClientRect();
@@ -32,10 +30,9 @@ export function initTilt(reduced: boolean): void {
       rx(-ny * MAX_TILT);
       ry(nx * MAX_TILT);
 
-      // The jar leans against the card for parallax depth; honey follows.
-      jarX?.(nx * -14);
-      jarR?.(nx * 5);
-      shX?.(nx * 22);
+      // The photograph counter-drifts on its deeper Z-plane for parallax.
+      phX?.(nx * -10);
+      phY?.(ny * -8);
 
       // The glow behaves like a light source tracking the pointer.
       card.style.setProperty('--glow-x', `${(nx + 0.5) * 100}%`);
@@ -45,9 +42,8 @@ export function initTilt(reduced: boolean): void {
     card.addEventListener('pointerleave', () => {
       rx(0);
       ry(0);
-      jarX?.(0);
-      jarR?.(0);
-      shX?.(0);
+      phX?.(0);
+      phY?.(0);
     });
 
     // Quick-view lift on entry — the card greets the pointer.

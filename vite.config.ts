@@ -11,7 +11,6 @@ export default defineConfig({
         // Split vendor chunks so GSAP/OGL cache independently of app code
         manualChunks: {
           gsap: ['gsap', 'gsap/ScrollTrigger', 'gsap/ScrollToPlugin', 'gsap/SplitText'],
-          ogl: ['ogl'],
           lenis: ['lenis'],
         },
       },

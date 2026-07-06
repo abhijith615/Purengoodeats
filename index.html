@@ -7,7 +7,7 @@
   <meta name="description" content="Raw, unprocessed forest honey wild-harvested by indigenous tribal communities in the forests of Villupuram, Tamil Nadu. 100% pure, lab tested, chemical free. Every drop carries a forest story." />
   <meta name="keywords" content="pure honey, forest honey, raw honey, tribal honey, Villupuram honey, Tamil Nadu honey, wild honey, unprocessed honey" />
   <meta name="author" content="Pure N Good Eats" />
-  <meta name="theme-color" content="#231407" />
+  <meta name="theme-color" content="#1C1007" />
   <link rel="canonical" href="https://purengoodeats.in/" />
 
   <!-- OpenGraph -->
@@ -16,14 +16,14 @@
   <meta property="og:title" content="Pure N Good Eats — Wild Forest Honey from Villupuram" />
   <meta property="og:description" content="Nature doesn't rush. Neither do we. Wild-harvested forest honey collected with care by tribal communities of Villupuram, Tamil Nadu." />
   <meta property="og:url" content="https://purengoodeats.in/" />
-  <meta property="og:image" content="https://purengoodeats.in/og-cover.jpg" />
+  <meta property="og:image" content="https://purengoodeats.in/images/og-cover.jpg" />
   <meta property="og:locale" content="en_IN" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Pure N Good Eats — Wild Forest Honey" />
   <meta name="twitter:description" content="Raw forest honey from the tribal hills of Villupuram, Tamil Nadu. 100% pure. Lab tested. Ethically harvested." />
-  <meta name="twitter:image" content="https://purengoodeats.in/og-cover.jpg" />
+  <meta name="twitter:image" content="https://purengoodeats.in/images/og-cover.jpg" />
 
   <!-- Fonts: Fraunces (display serif) + Outfit (geometric sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -40,6 +40,7 @@
     "url": "https://purengoodeats.in",
     "email": "hello@purengoodeats.in",
     "telephone": "+91-98765-43210",
+    "image": "https://purengoodeats.in/images/jar-meadow.jpg",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Villupuram",
@@ -62,6 +63,7 @@
         "position": 1,
         "name": "Wild Forest Honey 250g",
         "description": "Raw, unprocessed wild forest honey — 250g glass jar.",
+        "image": "https://purengoodeats.in/images/jars-trio.jpg",
         "brand": { "@type": "Brand", "name": "Pure N Good Eats" },
         "offers": { "@type": "Offer", "price": "349", "priceCurrency": "INR", "availability": "https://schema.org/InStock" }
       },
@@ -70,6 +72,7 @@
         "position": 2,
         "name": "Wild Forest Honey 500g",
         "description": "Raw, unprocessed wild forest honey — 500g glass jar.",
+        "image": "https://purengoodeats.in/images/jars-trio.jpg",
         "brand": { "@type": "Brand", "name": "Pure N Good Eats" },
         "offers": { "@type": "Offer", "price": "649", "priceCurrency": "INR", "availability": "https://schema.org/InStock" }
       },
@@ -78,6 +81,7 @@
         "position": 3,
         "name": "Wild Forest Honey 1000g",
         "description": "Raw, unprocessed wild forest honey — 1kg glass jar.",
+        "image": "https://purengoodeats.in/images/jars-trio.jpg",
         "brand": { "@type": "Brand", "name": "Pure N Good Eats" },
         "offers": { "@type": "Offer", "price": "1199", "priceCurrency": "INR", "availability": "https://schema.org/InStock" }
       }
@@ -90,7 +94,7 @@
   <a href="#main" class="skip-link">Skip to content</a>
 
   <!-- ============ PRELOADER ============ -->
-  <div id="preloader" class="fixed inset-0 z-[100] grid place-items-center bg-cocoa" aria-hidden="true">
+  <div id="preloader" class="fixed inset-0 z-[100] grid place-items-center bg-cocoa-deep" aria-hidden="true">
     <div class="text-center">
       <svg class="mx-auto mb-6 h-16 w-12" viewBox="0 0 48 64" fill="none" aria-hidden="true">
         <path id="preloader-drop" d="M24 4C24 4 8 28 8 42a16 16 0 0 0 32 0C40 28 24 4 24 4Z" stroke="#F5B942" stroke-width="2" fill="none" />
@@ -137,28 +141,33 @@
   </header>
 
   <main id="main">
-    <!-- ============ HERO ============ -->
-    <section id="hero" class="relative flex min-h-[100svh] items-center overflow-hidden bg-cocoa text-cream" aria-label="Introduction">
-      <canvas id="hero-canvas" class="absolute inset-0 h-full w-full" aria-hidden="true"></canvas>
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-cocoa/70 via-transparent to-cocoa/40" aria-hidden="true"></div>
+    <!-- ============ HERO: CINEMATIC VIDEO ============ -->
+    <section id="hero" class="relative flex min-h-[100svh] items-end overflow-hidden bg-cocoa-deep text-cream" aria-label="Introduction">
+      <video id="hero-video" class="absolute inset-0 h-full w-full object-cover"
+        muted loop playsinline preload="auto"
+        poster="/images/honeycomb-drip.jpg" aria-hidden="true"></video>
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-cocoa-deep via-cocoa-deep/25 to-cocoa-deep/45" aria-hidden="true"></div>
+      <div class="pointer-events-none absolute inset-0 hero-vignette" aria-hidden="true"></div>
 
-      <div class="relative z-10 mx-auto w-full max-w-[1600px] px-6 pb-28 pt-36 md:px-12">
-        <p id="hero-eyebrow" class="mb-6 font-sans text-xs uppercase tracking-[0.5em] text-honey md:text-sm">
+      <div class="relative z-10 mx-auto w-full max-w-[1600px] px-6 pb-24 pt-40 md:px-12 md:pb-28">
+        <p id="hero-eyebrow" class="mb-6 font-sans text-xs uppercase tracking-[0.5em] text-amber md:text-sm">
           Wild Forest Honey — Villupuram, Tamil Nadu
         </p>
-        <h1 id="hero-title" class="max-w-5xl font-serif text-[13vw] font-light leading-[0.95] tracking-tight md:text-[7.5vw]">
-          Nature doesn't rush.<br /><em class="text-honey">Neither do we.</em>
+        <h1 id="hero-title" class="max-w-5xl font-serif text-[13vw] font-light leading-[0.95] tracking-tight md:text-[7vw]">
+          Nature doesn't rush.<br /><em class="text-amber">Neither do we.</em>
         </h1>
-        <p id="hero-copy" class="mt-8 max-w-md font-sans text-base font-light leading-relaxed text-cream/80 md:text-lg">
-          Wild harvested honey collected with care by indigenous tribal communities from the forests surrounding Villupuram.
-        </p>
-        <div id="hero-ctas" class="mt-10 flex flex-wrap items-center gap-5">
-          <a href="#shop" class="btn-primary" data-magnetic data-cursor="Shop">Explore Collection</a>
-          <a href="#story" class="btn-ghost" data-magnetic data-cursor="Story">Discover Our Story</a>
+        <div class="mt-10 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+          <p id="hero-copy" class="max-w-md font-sans text-base font-light leading-relaxed text-cream/85 md:text-lg">
+            Wild harvested honey collected with care by indigenous tribal communities from the forests surrounding Villupuram.
+          </p>
+          <div id="hero-ctas" class="flex flex-wrap items-center gap-5">
+            <a href="#shop" class="btn-primary" data-magnetic data-cursor="Shop">Explore Collection</a>
+            <a href="#story" class="btn-ghost" data-magnetic data-cursor="Story">Discover Our Story</a>
+          </div>
         </div>
       </div>
 
-      <div id="hero-scroll-hint" class="absolute bottom-8 left-1/2 -translate-x-1/2 text-center" aria-hidden="true">
+      <div id="hero-scroll-hint" class="absolute bottom-8 left-1/2 hidden -translate-x-1/2 text-center md:block" aria-hidden="true">
         <span class="mb-2 block font-sans text-[10px] uppercase tracking-[0.4em] text-cream/50">Scroll</span>
         <span class="mx-auto block h-10 w-px overflow-hidden bg-cream/20">
           <span id="scroll-hint-line" class="block h-full w-full origin-top bg-honey"></span>
@@ -169,7 +178,6 @@
     <!-- ============ MARQUEE ============ -->
     <div class="overflow-hidden border-y border-cocoa/10 bg-beige py-5" aria-hidden="true">
       <div id="marquee" class="flex w-max gap-10 whitespace-nowrap font-serif text-2xl italic text-cocoa/70 md:text-3xl">
-        <!-- duplicated in JS for seamless loop -->
         <span class="marquee-chunk flex gap-10">
           <span>Raw &amp; Wild</span><span class="text-honey">✺</span>
           <span>100% Pure</span><span class="text-honey">✺</span>
@@ -191,52 +199,70 @@
 
         <div class="relative mt-24">
           <!-- Organic connecting line, drawn on scroll -->
-          <svg id="story-line-svg" class="absolute left-6 top-0 hidden h-full w-24 md:left-1/2 md:block md:-translate-x-1/2" viewBox="0 0 100 1200" preserveAspectRatio="none" fill="none" aria-hidden="true">
+          <svg id="story-line-svg" class="absolute left-1/2 top-0 hidden h-full w-24 -translate-x-1/2 md:block" viewBox="0 0 100 1200" preserveAspectRatio="none" fill="none" aria-hidden="true">
             <path id="story-line" d="M50 0 C 20 100, 80 200, 50 300 C 20 400, 80 500, 50 600 C 20 700, 80 800, 50 900 C 20 1000, 80 1100, 50 1200" stroke="#E8A020" stroke-width="2" stroke-dasharray="6 8" />
           </svg>
 
-          <ol class="relative space-y-20 md:space-y-32">
-            <li class="story-step md:grid md:grid-cols-2 md:gap-24">
-              <div class="md:text-right">
-                <span class="story-num">01</span>
-                <h3 class="story-step-title">The Forest</h3>
-                <p class="story-step-copy">Deep in the Kalrayan foothills, wild bees build combs in ancient trees — feeding on forest flowers untouched by pesticides.</p>
+          <ol class="relative space-y-24 md:space-y-40">
+            <li class="story-step items-center gap-10 md:grid md:grid-cols-2 md:gap-28">
+              <figure class="img-reveal story-img" data-img-reveal>
+                <img src="/images/story-forest.jpg" alt="Sunlight pouring through a dense Villupuram forest canopy" width="1200" height="1200" loading="lazy" decoding="async" />
+              </figure>
+              <div class="story-copywrap mt-8 md:mt-0 md:text-right">
+                <span class="story-num">01 — The Forest</span>
+                <h3 class="story-step-title">Where wild bees build</h3>
+                <p class="story-step-copy md:ml-auto">Deep in the Kalrayan foothills, wild bees build combs in ancient trees — feeding on forest flowers untouched by pesticides.</p>
               </div>
             </li>
-            <li class="story-step md:grid md:grid-cols-2 md:gap-24">
-              <div class="md:col-start-2">
-                <span class="story-num">02</span>
-                <h3 class="story-step-title">Tribal Harvest</h3>
+            <li class="story-step items-center gap-10 md:grid md:grid-cols-2 md:gap-28">
+              <div class="story-copywrap order-2 mt-8 md:order-1 md:mt-0">
+                <span class="story-num">02 — Tribal Harvest</span>
+                <h3 class="story-step-title">Climbed, not farmed</h3>
                 <p class="story-step-copy">Indigenous harvesters climb with rope and smoke, taking only mature comb and always leaving enough for the colony to thrive.</p>
               </div>
+              <figure class="img-reveal story-img order-1 md:order-2" data-img-reveal>
+                <img src="/images/story-harvest.jpg" alt="A tribal harvester gently smoking a wild hive high in a forest tree" width="1200" height="1200" loading="lazy" decoding="async" />
+              </figure>
             </li>
-            <li class="story-step md:grid md:grid-cols-2 md:gap-24">
-              <div class="md:text-right">
-                <span class="story-num">03</span>
-                <h3 class="story-step-title">Natural Filtering</h3>
-                <p class="story-step-copy">Honey drips through muslin cloth by gravity alone. Never heated, never pressed — pollen and enzymes stay alive.</p>
+            <li class="story-step items-center gap-10 md:grid md:grid-cols-2 md:gap-28">
+              <figure class="img-reveal story-img" data-img-reveal>
+                <img src="/images/story-filtering.jpg" alt="Raw honey dripping through muslin cloth into a clay pot" width="1200" height="1200" loading="lazy" decoding="async" />
+              </figure>
+              <div class="story-copywrap mt-8 md:mt-0 md:text-right">
+                <span class="story-num">03 — Natural Filtering</span>
+                <h3 class="story-step-title">Gravity does the work</h3>
+                <p class="story-step-copy md:ml-auto">Honey drips through muslin cloth by gravity alone. Never heated, never pressed — pollen and enzymes stay alive.</p>
               </div>
             </li>
-            <li class="story-step md:grid md:grid-cols-2 md:gap-24">
-              <div class="md:col-start-2">
-                <span class="story-num">04</span>
-                <h3 class="story-step-title">Quality Testing</h3>
+            <li class="story-step items-center gap-10 md:grid md:grid-cols-2 md:gap-28">
+              <div class="story-copywrap order-2 mt-8 md:order-1 md:mt-0">
+                <span class="story-num">04 — Quality Testing</span>
+                <h3 class="story-step-title">Proven pure, every batch</h3>
                 <p class="story-step-copy">Every batch is lab tested for purity, moisture and adulteration before it earns the Pure N Good name.</p>
               </div>
+              <figure class="img-reveal story-img order-1 md:order-2" data-img-reveal>
+                <img src="/images/story-testing.jpg" alt="Honey samples being tested for purity in a laboratory" width="1200" height="1200" loading="lazy" decoding="async" />
+              </figure>
             </li>
-            <li class="story-step md:grid md:grid-cols-2 md:gap-24">
-              <div class="md:text-right">
-                <span class="story-num">05</span>
-                <h3 class="story-step-title">Glass Bottling</h3>
-                <p class="story-step-copy">Hand-filled into glass jars in small batches — no plastic, no preservatives, nothing added, nothing removed.</p>
+            <li class="story-step items-center gap-10 md:grid md:grid-cols-2 md:gap-28">
+              <figure class="img-reveal story-img" data-img-reveal>
+                <img src="/images/story-bottling.jpg" alt="Golden honey being hand-filled into glass jars" width="1200" height="1200" loading="lazy" decoding="async" />
+              </figure>
+              <div class="story-copywrap mt-8 md:mt-0 md:text-right">
+                <span class="story-num">05 — Glass Bottling</span>
+                <h3 class="story-step-title">Sealed in glass, never plastic</h3>
+                <p class="story-step-copy md:ml-auto">Hand-filled into glass jars in small batches — no plastic, no preservatives, nothing added, nothing removed.</p>
               </div>
             </li>
-            <li class="story-step md:grid md:grid-cols-2 md:gap-24">
-              <div class="md:col-start-2">
-                <span class="story-num">06</span>
-                <h3 class="story-step-title">Your Home</h3>
+            <li class="story-step items-center gap-10 md:grid md:grid-cols-2 md:gap-28">
+              <div class="story-copywrap order-2 mt-8 md:order-1 md:mt-0">
+                <span class="story-num">06 — Your Home</span>
+                <h3 class="story-step-title">The forest, on your table</h3>
                 <p class="story-step-copy">From a wild comb to your kitchen shelf in weeks, not months — carrying the whole forest with it.</p>
               </div>
+              <figure class="img-reveal story-img order-1 md:order-2" data-img-reveal>
+                <img src="/images/story-home.jpg" alt="A jar of forest honey on a warm breakfast table at home" width="1200" height="1200" loading="lazy" decoding="async" />
+              </figure>
             </li>
           </ol>
         </div>
@@ -249,7 +275,7 @@
         <p class="section-eyebrow !text-honey" data-reveal="line">The People</p>
         <h2 id="community-title" class="section-title !text-cream" data-reveal="lines">The Hands<br /><em>Behind Every Jar</em></h2>
 
-        <div class="mt-16 grid gap-16 md:grid-cols-[1.2fr_1fr] md:gap-24">
+        <div class="mt-16 grid gap-16 lg:grid-cols-[1fr_1.1fr] lg:gap-24">
           <div>
             <p class="font-serif text-2xl font-light leading-snug md:text-4xl" data-reveal="words">
               For generations, the tribal families of Villupuram have read the forest like a language — knowing which tree hums with a mature hive, and when to leave it alone.
@@ -265,66 +291,42 @@
               <li class="flex items-center gap-3"><span class="dot"></span>Respect for forests</li>
               <li class="flex items-center gap-3"><span class="dot"></span>Bee-first collection</li>
             </ul>
+
+            <figure class="img-reveal community-img mt-12 hidden lg:block" data-img-reveal>
+              <img src="/images/community-walking.jpg" alt="Tribal honey collectors walking a sunlit forest path with woven baskets" width="1600" height="1195" loading="lazy" decoding="async" />
+              <figcaption class="img-caption">Walking the harvest home — no vehicles ever enter the forest.</figcaption>
+            </figure>
           </div>
 
-          <!-- Portrait cards: illustrated, revealed with clip-path -->
-          <div class="relative grid gap-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
-            <figure class="portrait" data-portrait>
-              <div class="portrait__art" aria-hidden="true">
-                <svg viewBox="0 0 200 240" class="h-full w-full">
-                  <rect width="200" height="240" fill="#3A4D2E"/>
-                  <circle cx="100" cy="88" r="38" fill="#8C5A2B"/>
-                  <path d="M60 240 C60 170 140 170 140 240Z" fill="#C98A2D"/>
-                  <path d="M62 78 a38 38 0 0 1 76 0 c0-30-18-44-38-44s-38 14-38 44Z" fill="#2B1A0E"/>
-                  <circle cx="86" cy="90" r="3.5" fill="#2B1A0E"/><circle cx="114" cy="90" r="3.5" fill="#2B1A0E"/>
-                  <path d="M90 108 q10 8 20 0" stroke="#2B1A0E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <figcaption class="portrait__caption">Murugan — 3rd generation harvester</figcaption>
+          <!-- Photo composition -->
+          <div class="space-y-8">
+            <figure class="img-reveal community-img" data-img-reveal>
+              <img src="/images/community-group.jpg" alt="Five smiling tribal honey collectors holding baskets of fresh honeycomb in the forest" width="1600" height="1195" loading="lazy" decoding="async" />
+              <figcaption class="img-caption">The harvest crew of the Kalrayan foothills, with the morning's comb.</figcaption>
             </figure>
-            <figure class="portrait mt-10" data-portrait>
-              <div class="portrait__art" aria-hidden="true">
-                <svg viewBox="0 0 200 240" class="h-full w-full">
-                  <rect width="200" height="240" fill="#4A5D38"/>
-                  <circle cx="100" cy="90" r="36" fill="#9C6633"/>
-                  <path d="M62 240 C62 172 138 172 138 240Z" fill="#E8A020"/>
-                  <path d="M64 86 a36 36 0 0 1 72 0 c2-34-16-50-36-50s-40 16-36 50Z" fill="#1F130A"/>
-                  <circle cx="87" cy="92" r="3.5" fill="#2B1A0E"/><circle cx="113" cy="92" r="3.5" fill="#2B1A0E"/>
-                  <path d="M91 110 q9 7 18 0" stroke="#2B1A0E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                  <circle cx="100" cy="36" r="5" fill="#F5B942"/>
-                </svg>
-              </div>
-              <figcaption class="portrait__caption">Valli — forest guardian &amp; keeper</figcaption>
+            <figure class="img-reveal community-img lg:ml-16" data-img-reveal>
+              <img src="/images/community-harvest.jpg" alt="A harvester on a bamboo ladder using gentle smoke to collect wild honeycomb" width="1600" height="1195" loading="lazy" decoding="async" />
+              <figcaption class="img-caption">Rope, bamboo and smoke — the same method for three hundred years.</figcaption>
             </figure>
-            <figure class="portrait" data-portrait>
-              <div class="portrait__art" aria-hidden="true">
-                <svg viewBox="0 0 200 240" class="h-full w-full">
-                  <rect width="200" height="240" fill="#33462A"/>
-                  <circle cx="100" cy="90" r="37" fill="#7A4E24"/>
-                  <path d="M60 240 C60 174 140 174 140 240Z" fill="#B4690E"/>
-                  <path d="M63 82 a37 37 0 0 1 74 0 c0-28-17-42-37-42s-37 14-37 42Z" fill="#2B1A0E"/>
-                  <circle cx="86" cy="92" r="3.5" fill="#1F130A"/><circle cx="114" cy="92" r="3.5" fill="#1F130A"/>
-                  <path d="M90 110 q10 9 20 0" stroke="#1F130A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <figcaption class="portrait__caption">Selvam — climbs since age twelve</figcaption>
-            </figure>
-            <figure class="portrait mt-10" data-portrait>
-              <div class="portrait__art" aria-hidden="true">
-                <svg viewBox="0 0 200 240" class="h-full w-full">
-                  <rect width="200" height="240" fill="#41552F"/>
-                  <circle cx="100" cy="90" r="36" fill="#8C5A2B"/>
-                  <path d="M62 240 C62 174 138 174 138 240Z" fill="#F2E8D5"/>
-                  <path d="M64 84 a36 36 0 0 1 72 0 c3-32-15-48-36-48s-39 16-36 48Z" fill="#160D06"/>
-                  <circle cx="87" cy="92" r="3.5" fill="#2B1A0E"/><circle cx="113" cy="92" r="3.5" fill="#2B1A0E"/>
-                  <path d="M91 109 q9 8 18 0" stroke="#2B1A0E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <figcaption class="portrait__caption">Kannagi — quality &amp; bottling lead</figcaption>
+            <figure class="img-reveal community-img lg:hidden" data-img-reveal>
+              <img src="/images/community-walking.jpg" alt="Tribal honey collectors walking a sunlit forest path with woven baskets" width="1600" height="1195" loading="lazy" decoding="async" />
+              <figcaption class="img-caption">Walking the harvest home — no vehicles ever enter the forest.</figcaption>
             </figure>
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- ============ CINEMATIC DIVIDER ============ -->
+    <section id="divider" class="relative flex min-h-[80svh] items-center justify-center overflow-hidden bg-cocoa-deep" aria-label="Every drop carries a forest story">
+      <img id="divider-img" src="/images/honeycomb-drip.jpg" alt="" width="1920" height="1072"
+        class="absolute inset-0 h-[120%] w-full object-cover" loading="lazy" decoding="async" aria-hidden="true" />
+      <div class="absolute inset-0 bg-cocoa-deep/45" aria-hidden="true"></div>
+      <blockquote class="relative z-10 max-w-4xl px-6 text-center">
+        <p class="font-serif text-4xl font-light italic leading-tight text-cream md:text-7xl" data-reveal="lines">
+          "Every drop carries<br />a <em class="text-amber">forest story</em>."
+        </p>
+      </blockquote>
     </section>
 
     <!-- ============ WHY OUR HONEY ============ -->
@@ -346,6 +348,9 @@
             <svg class="feature-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path class="draw" d="M12 12l16 16M12 28L28 12M20 8v24M8 20h24" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
             <h3>No Added Sugar</h3><p>Zero syrups, zero blending. Sweetness comes from flowers alone.</p>
           </li>
+          <li class="feature-card feature-card--photo" data-float>
+            <img src="/images/honey-pour.jpg" alt="Golden honey being poured into a glass jar beside fresh honeycomb" width="1600" height="1195" loading="lazy" decoding="async" />
+          </li>
           <li class="feature-card" data-float>
             <svg class="feature-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle class="draw" cx="20" cy="20" r="12" stroke="currentColor" stroke-width="1.6"/><path class="draw" d="M14 20l4 4 8-9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <h3>Chemical Free</h3><p>No antibiotics, no pesticides — the forest has never seen them.</p>
@@ -357,10 +362,6 @@
           <li class="feature-card" data-float>
             <svg class="feature-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path class="draw" d="M16 8h8M18 8v8l-7 14a3 3 0 0 0 3 4h12a3 3 0 0 0 3-4l-7-14V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <h3>Lab Tested</h3><p>Every batch verified for purity and moisture by an independent lab.</p>
-          </li>
-          <li class="feature-card" data-float>
-            <svg class="feature-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path class="draw" d="M20 8l3.5 7 7.5 1-5.5 5.5L27 29l-7-3.7L13 29l1.5-7.5L9 16l7.5-1L20 8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-            <h3>Sustainably Collected</h3><p>Combs are never stripped bare — colonies live to make honey again.</p>
           </li>
           <li class="feature-card feature-card--accent" data-float>
             <p class="font-serif text-2xl italic leading-tight">"The forest gives, if you take gently."</p>
@@ -376,28 +377,19 @@
         <p class="section-eyebrow !text-honey" data-reveal="line">The Collection</p>
         <h2 id="shop-title" class="section-title !text-cream" data-reveal="lines">Three Sizes.<br /><em>One Forest.</em></h2>
 
+        <!-- Signature banner -->
+        <figure class="img-reveal signature-banner mt-16" data-img-reveal>
+          <img id="signature-img" src="/images/jar-meadow.jpg" alt="A Pure N Good honey jar resting in a golden wildflower meadow at sunset" width="1920" height="1434" loading="lazy" decoding="async" />
+          <figcaption class="signature-banner__caption">
+            <span class="font-serif text-2xl italic text-cream md:text-4xl">Bottled where it's born.</span>
+          </figcaption>
+        </figure>
+
         <div class="mt-20 grid gap-10 md:grid-cols-3" data-stagger-cards>
-          <!-- Product cards are rendered identical in structure; JS binds tilt + cart -->
           <article class="product-card" data-tilt data-product-id="honey-250" data-price="349" data-name="Wild Forest Honey 250g" aria-label="Wild Forest Honey 250 grams">
             <div class="product-card__stage">
+              <div class="product-photo" style="--jar-pos: 19% 64%; --jar-zoom: 265%" role="img" aria-label="The 250 gram jar of wild forest honey"></div>
               <div class="product-card__glow" aria-hidden="true"></div>
-              <svg class="product-jar" viewBox="0 0 200 260" aria-hidden="true" style="width:56%">
-                <defs>
-                  <linearGradient id="honey-g1" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#F5B942"/><stop offset="0.5" stop-color="#E8A020"/><stop offset="1" stop-color="#B4690E"/>
-                  </linearGradient>
-                </defs>
-                <rect x="58" y="18" width="84" height="26" rx="8" fill="#2B1A0E" stroke="#F5B942" stroke-opacity="0.25"/>
-                <rect x="62" y="24" width="76" height="4" rx="2" fill="#F5B942" opacity="0.35"/>
-                <path d="M52 52 h96 v150 a28 28 0 0 1 -28 28 h-40 a28 28 0 0 1 -28 -28 Z" fill="url(#honey-g1)"/>
-                <path class="jar-glass" d="M46 46 h108 v156 a34 34 0 0 1 -34 34 h-40 a34 34 0 0 1 -34 -34 Z" fill="#fff" opacity="0.08"/>
-                <path class="jar-shine" d="M62 60 v130 a18 18 0 0 0 6 13" stroke="#FFF3D6" stroke-width="7" stroke-linecap="round" opacity="0.4" fill="none"/>
-                <ellipse class="jar-honey-wave" cx="100" cy="70" rx="46" ry="7" fill="#FFDf8E" opacity="0.5"/>
-                <rect x="60" y="118" width="80" height="52" rx="4" fill="#F7F0E3"/>
-                <text x="100" y="140" text-anchor="middle" font-family="serif" font-size="13" fill="#2B1A0E" font-style="italic">Pure N Good</text>
-                <text x="100" y="158" text-anchor="middle" font-family="sans-serif" font-size="9" letter-spacing="2" fill="#8C4A0A">FOREST HONEY</text>
-              </svg>
-              <div class="product-card__shadow" aria-hidden="true"></div>
             </div>
             <div class="product-card__body">
               <div class="flex items-baseline justify-between">
@@ -419,19 +411,8 @@
           <article class="product-card product-card--hero" data-tilt data-product-id="honey-500" data-price="649" data-name="Wild Forest Honey 500g" aria-label="Wild Forest Honey 500 grams">
             <span class="product-card__badge">Most Loved</span>
             <div class="product-card__stage">
+              <div class="product-photo" style="--jar-pos: 46% 42%; --jar-zoom: 205%" role="img" aria-label="The 500 gram jar of wild forest honey"></div>
               <div class="product-card__glow" aria-hidden="true"></div>
-              <svg class="product-jar" viewBox="0 0 200 260" aria-hidden="true" style="width:68%">
-                <rect x="58" y="18" width="84" height="26" rx="8" fill="#2B1A0E" stroke="#F5B942" stroke-opacity="0.25"/>
-                <rect x="62" y="24" width="76" height="4" rx="2" fill="#F5B942" opacity="0.35"/>
-                <path d="M52 52 h96 v150 a28 28 0 0 1 -28 28 h-40 a28 28 0 0 1 -28 -28 Z" fill="url(#honey-g1)"/>
-                <path class="jar-glass" d="M46 46 h108 v156 a34 34 0 0 1 -34 34 h-40 a34 34 0 0 1 -34 -34 Z" fill="#fff" opacity="0.08"/>
-                <path class="jar-shine" d="M62 60 v130 a18 18 0 0 0 6 13" stroke="#FFF3D6" stroke-width="7" stroke-linecap="round" opacity="0.4" fill="none"/>
-                <ellipse class="jar-honey-wave" cx="100" cy="70" rx="46" ry="7" fill="#FFDF8E" opacity="0.5"/>
-                <rect x="60" y="118" width="80" height="52" rx="4" fill="#F7F0E3"/>
-                <text x="100" y="140" text-anchor="middle" font-family="serif" font-size="13" fill="#2B1A0E" font-style="italic">Pure N Good</text>
-                <text x="100" y="158" text-anchor="middle" font-family="sans-serif" font-size="9" letter-spacing="2" fill="#8C4A0A">FOREST HONEY</text>
-              </svg>
-              <div class="product-card__shadow" aria-hidden="true"></div>
             </div>
             <div class="product-card__body">
               <div class="flex items-baseline justify-between">
@@ -452,19 +433,8 @@
 
           <article class="product-card" data-tilt data-product-id="honey-1000" data-price="1199" data-name="Wild Forest Honey 1000g" aria-label="Wild Forest Honey 1000 grams">
             <div class="product-card__stage">
+              <div class="product-photo" style="--jar-pos: 82% 48%; --jar-zoom: 175%" role="img" aria-label="The 1 kilogram jar of wild forest honey"></div>
               <div class="product-card__glow" aria-hidden="true"></div>
-              <svg class="product-jar" viewBox="0 0 200 260" aria-hidden="true" style="width:80%">
-                <rect x="58" y="18" width="84" height="26" rx="8" fill="#2B1A0E" stroke="#F5B942" stroke-opacity="0.25"/>
-                <rect x="62" y="24" width="76" height="4" rx="2" fill="#F5B942" opacity="0.35"/>
-                <path d="M52 52 h96 v150 a28 28 0 0 1 -28 28 h-40 a28 28 0 0 1 -28 -28 Z" fill="url(#honey-g1)"/>
-                <path class="jar-glass" d="M46 46 h108 v156 a34 34 0 0 1 -34 34 h-40 a34 34 0 0 1 -34 -34 Z" fill="#fff" opacity="0.08"/>
-                <path class="jar-shine" d="M62 60 v130 a18 18 0 0 0 6 13" stroke="#FFF3D6" stroke-width="7" stroke-linecap="round" opacity="0.4" fill="none"/>
-                <ellipse class="jar-honey-wave" cx="100" cy="70" rx="46" ry="7" fill="#FFDF8E" opacity="0.5"/>
-                <rect x="60" y="118" width="80" height="52" rx="4" fill="#F7F0E3"/>
-                <text x="100" y="140" text-anchor="middle" font-family="serif" font-size="13" fill="#2B1A0E" font-style="italic">Pure N Good</text>
-                <text x="100" y="158" text-anchor="middle" font-family="sans-serif" font-size="9" letter-spacing="2" fill="#8C4A0A">FOREST HONEY</text>
-              </svg>
-              <div class="product-card__shadow" aria-hidden="true"></div>
             </div>
             <div class="product-card__body">
               <div class="flex items-baseline justify-between">
@@ -484,38 +454,44 @@
           </article>
         </div>
 
-        <!-- ============ PRODUCT DETAILS ACCORDIONS ============ -->
-        <div id="details" class="mx-auto mt-28 max-w-3xl">
-          <h3 class="mb-8 font-serif text-3xl font-light text-cream md:text-4xl" data-reveal="lines">Everything <em>in the jar</em></h3>
-          <div class="divide-y divide-cream/10 border-y border-cream/10">
-            <details class="accordion" data-accordion>
-              <summary>Ingredients<span class="accordion__icon" aria-hidden="true"></span></summary>
-              <div class="accordion__body"><p>100% raw wild forest honey. That's the whole list. No sugar, no syrup, no flavouring, no preservatives.</p></div>
-            </details>
-            <details class="accordion" data-accordion>
-              <summary>Nutrition<span class="accordion__icon" aria-hidden="true"></span></summary>
-              <div class="accordion__body"><p>Per 100g (approx.): Energy 320 kcal · Carbohydrates 79g · Natural sugars 76g · Protein 0.4g · Fat 0g. Contains natural pollen, enzymes, and trace minerals.</p></div>
-            </details>
-            <details class="accordion" data-accordion>
-              <summary>Shelf Life<span class="accordion__icon" aria-hidden="true"></span></summary>
-              <div class="accordion__body"><p>Best within 24 months of bottling. Raw honey may crystallise over time — that's a sign of purity, not spoilage. Warm the jar gently in water to re-liquefy.</p></div>
-            </details>
-            <details class="accordion" data-accordion>
-              <summary>Storage Instructions<span class="accordion__icon" aria-hidden="true"></span></summary>
-              <div class="accordion__body"><p>Store in a cool, dry place away from direct sunlight. No refrigeration needed. Always use a dry spoon.</p></div>
-            </details>
-            <details class="accordion" data-accordion>
-              <summary>Harvest Region<span class="accordion__icon" aria-hidden="true"></span></summary>
-              <div class="accordion__body"><p>Wild forests surrounding Villupuram district, Tamil Nadu — including the Kalrayan and Gingee hill ranges. Each jar notes its harvest season.</p></div>
-            </details>
-            <details class="accordion" data-accordion>
-              <summary>Delivery<span class="accordion__icon" aria-hidden="true"></span></summary>
-              <div class="accordion__body"><p>Ships across India in 3–7 working days, packed in recycled paper cushioning. Free shipping on orders above ₹999.</p></div>
-            </details>
-            <details class="accordion" data-accordion>
-              <summary>Certification<span class="accordion__icon" aria-hidden="true"></span></summary>
-              <div class="accordion__body"><p>FSSAI licensed. Every batch is independently lab tested for purity, moisture content and absence of adulterants — reports available on request.</p></div>
-            </details>
+        <!-- ============ PRODUCT DETAILS ============ -->
+        <div id="details" class="mt-28 grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
+          <figure class="img-reveal details-img lg:sticky lg:top-28 lg:self-start" data-img-reveal>
+            <img src="/images/jar-forest.jpg" alt="A honey dipper drizzling wild honey into a glass jar on a mossy forest floor" width="1600" height="1195" loading="lazy" decoding="async" />
+            <figcaption class="img-caption !text-cream/50">Raw, dark and fragrant — honey the way the forest makes it.</figcaption>
+          </figure>
+          <div>
+            <h3 class="mb-8 font-serif text-3xl font-light text-cream md:text-4xl" data-reveal="lines">Everything <em>in the jar</em></h3>
+            <div class="divide-y divide-cream/10 border-y border-cream/10">
+              <details class="accordion" data-accordion>
+                <summary>Ingredients<span class="accordion__icon" aria-hidden="true"></span></summary>
+                <div class="accordion__body"><p>100% raw wild forest honey. That's the whole list. No sugar, no syrup, no flavouring, no preservatives.</p></div>
+              </details>
+              <details class="accordion" data-accordion>
+                <summary>Nutrition<span class="accordion__icon" aria-hidden="true"></span></summary>
+                <div class="accordion__body"><p>Per 100g (approx.): Energy 320 kcal · Carbohydrates 79g · Natural sugars 76g · Protein 0.4g · Fat 0g. Contains natural pollen, enzymes, and trace minerals.</p></div>
+              </details>
+              <details class="accordion" data-accordion>
+                <summary>Shelf Life<span class="accordion__icon" aria-hidden="true"></span></summary>
+                <div class="accordion__body"><p>Best within 24 months of bottling. Raw honey may crystallise over time — that's a sign of purity, not spoilage. Warm the jar gently in water to re-liquefy.</p></div>
+              </details>
+              <details class="accordion" data-accordion>
+                <summary>Storage Instructions<span class="accordion__icon" aria-hidden="true"></span></summary>
+                <div class="accordion__body"><p>Store in a cool, dry place away from direct sunlight. No refrigeration needed. Always use a dry spoon.</p></div>
+              </details>
+              <details class="accordion" data-accordion>
+                <summary>Harvest Region<span class="accordion__icon" aria-hidden="true"></span></summary>
+                <div class="accordion__body"><p>Wild forests surrounding Villupuram district, Tamil Nadu — including the Kalrayan and Gingee hill ranges. Each jar notes its harvest season.</p></div>
+              </details>
+              <details class="accordion" data-accordion>
+                <summary>Delivery<span class="accordion__icon" aria-hidden="true"></span></summary>
+                <div class="accordion__body"><p>Ships across India in 3–7 working days, packed in recycled paper cushioning. Free shipping on orders above ₹999.</p></div>
+              </details>
+              <details class="accordion" data-accordion>
+                <summary>Certification<span class="accordion__icon" aria-hidden="true"></span></summary>
+                <div class="accordion__body"><p>FSSAI licensed. Every batch is independently lab tested for purity, moisture content and absence of adulterants — reports available on request.</p></div>
+              </details>
+            </div>
           </div>
         </div>
       </div>
@@ -529,7 +505,6 @@
           <h2 id="testimonials-title" class="section-title" data-reveal="lines">People <em>Taste</em> the Difference</h2>
         </div>
       </div>
-      <!-- Horizontally scrubbed track -->
       <div id="testimonial-track-wrap" class="mt-16">
         <div id="testimonial-track" class="flex w-max gap-8 px-6 md:px-12">
           <blockquote class="testimonial-card">

@@ -11,10 +11,11 @@ from Villupuram, Tamil Nadu — built for speed first.
 | Styling | **Tailwind CSS v4** | Design tokens via `@theme`, tiny purged output |
 | Motion | **GSAP 3.13** (ScrollTrigger, ScrollToPlugin, SplitText) | rAF-driven, GPU-accelerated |
 | Scroll | **Lenis** | Buttery smooth scrolling, synced to ScrollTrigger via the GSAP ticker |
-| WebGL | **OGL** (~15kb) | Single-draw-call honey shader; Three.js would cost 40× the bytes |
+| Hero | **Native video** (desktop + mobile cuts) | Only the matching cut is downloaded; poster fallback for reduced motion |
 
-**Total JS: ~76 KB gzipped.** No images are downloaded — every visual is inline
-SVG, CSS, or a WebGL shader, so there are zero layout shifts and nothing to lazy-load late.
+**Total JS: ~62 KB gzipped.** All photography is pre-compressed (2–4 MB originals
+→ 140–340 KB), served with explicit dimensions and `loading="lazy"`, so there are
+zero layout shifts. Raw originals stay out of git; optimized copies live in `public/`.
 
 ## Run it
 
@@ -29,6 +30,9 @@ npm run preview  # serve the production build
 
 ```
 index.html               All semantic markup + SEO meta + JSON-LD schemas
+public/
+  images/                Optimized photography (story steps, community, products)
+  video/                 Hero films: hero-desktop.mp4 + hero-mobile.mp4
 src/
   main.ts                Boot orchestrator, preloader, newsletter, map link
   styles/main.css        Tailwind theme tokens + component styles + grain texture
@@ -36,19 +40,27 @@ src/
     motion.ts            Reduced-motion / touch / DPR helpers
     scroll.ts            Lenis ⟷ ScrollTrigger sync, smooth anchor scrolling
     cursor.ts            Magnetic honey-drop cursor (velocity squash, blob morph, labels)
-    hero.ts              OGL WebGL hero: flowing honey fbm, honeycomb lattice,
-                         pollen parallax, pointer light — one fragment shader
+    hero-video.ts        Cinematic hero: viewport-matched video source, visibility-
+                         aware playback, Ken-Burns drift, scroll depth parallax
     animations.ts        Scroll storytelling: SplitText masked reveals, story line
-                         drawing, community colour journey, portrait unveils,
-                         marquee w/ scroll-velocity, testimonial scrub, counters
-    tilt.ts              3D product-card tilt: jar counter-parallax, light-tracking
-                         glow, responsive shadow
+                         drawing, community colour journey, clip-path photo reveals
+                         with inner parallax, divider scrub, marquee w/ velocity,
+                         testimonial scrub, counters
+    tilt.ts              3D product-card tilt: photo counter-parallax on a deeper
+                         Z-plane, light-tracking glow overlay
     cart.ts              Cart state + localStorage, fly-to-cart drop, slide drawer,
                          WhatsApp checkout handoff
     accordions.ts        Native <details> accordions with GSAP height animation
     sound.ts             Optional ambient forest audio, synthesised with Web Audio
                          (zero network bytes), muted by default
 ```
+
+## Product imagery trick
+
+All three product cards share ONE photograph (`jars-trio.jpg`, which shows the
+250g / 500g / 1kg jars side by side). Each card crops into its own jar with
+`background-size`/`background-position` custom properties — three "product
+renders" for the bytes of one image.
 
 ## Performance & accessibility decisions
 
@@ -66,8 +78,8 @@ src/
 
 ## Bits worth stealing
 
-- The hero's pollen, honeycomb and liquid are all *procedural* in one GLSL
-  fragment shader — a single fullscreen triangle, one draw call.
+- The hero downloads only the video cut that matches the viewport, pauses when
+  off-screen, and layers Ken-Burns drift + scroll parallax over the film plane.
 - The marquee's speed is modulated by scroll velocity (`ScrollTrigger.getVelocity`).
 - The ambient forest sound is synthesised (filtered brown noise + LFO breathing +
   randomised bird chirps) — no audio files shipped.
