@@ -146,6 +146,10 @@ body::after {
 }
 /* On light sections the neon is invisible (1.03:1) — use the darkened neon,
    which keeps the brand hue at 5.4:1 against bone. */
+#honey .section-title,
+#honey h3.font-display { color: var(--color-ink); }
+#honey .section-title em,
+#honey h3.font-display em { color: var(--color-neon-deep); }
 #how .section-title { color: var(--color-ink); }
 #how .section-title em { color: var(--color-ink); }
 
@@ -222,10 +226,12 @@ body::after {
   background: rgb(249 254 46 / 0.07);
 }
 /* Ghost button sitting on a light section */
+#honey .btn-ghost,
 #how .btn-ghost {
   border-color: rgb(11 11 7 / 0.25);
   color: var(--color-ink);
 }
+#honey .btn-ghost:hover,
 #how .btn-ghost:hover {
   border-color: var(--color-ink);
   background: rgb(11 11 7 / 0.05);
@@ -353,6 +359,7 @@ body::after {
 /* Captions must live OUTSIDE .img-reveal — that frame clips its overflow to
    animate the reveal, and would shear the caption off entirely. */
 .img-figure { display: block; }
+#honey .img-caption { color: rgb(11 11 7 / 0.5); }
 .img-caption {
   margin-top: 0.85rem;
   font-family: var(--font-sans);
@@ -363,6 +370,24 @@ body::after {
 }
 
 .community-img { aspect-ratio: 4 / 3; }
+.details-img { aspect-ratio: 4 / 3; }
+
+.signature-banner {
+  aspect-ratio: 21 / 9;
+  border-radius: 1.5rem;
+}
+.signature-banner img { height: 100%; }
+.signature-banner__caption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: 4rem 2.5rem 2rem;
+  background: linear-gradient(to top, rgb(11 11 7 / 0.8), transparent);
+}
+@media (max-width: 640px) {
+  .signature-banner { aspect-ratio: 4 / 3; }
+}
+
 .how-img { aspect-ratio: 4 / 3; }
 
 #divider-img { will-change: transform; }
@@ -665,6 +690,225 @@ body::after {
   color: rgb(11 11 7 / 0.72);
 }
 #how .img-reveal { border: 2px solid var(--color-ink); }
+
+/* ============ POINT CARDS (honey provenance, on light) ============ */
+.point-card {
+  border-top: 1px solid rgb(11 11 7 / 0.15);
+  padding-top: 1.5rem;
+  will-change: transform;
+}
+.point-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: 1.15;
+  color: var(--color-ink);
+}
+.point-card p {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgb(11 11 7 / 0.62);
+}
+.point-card--accent {
+  border-top-color: var(--color-ink);
+  color: var(--color-ink);
+}
+
+/* ============ TASTE & USE ============ */
+.taste-row {
+  display: grid;
+  gap: 0.4rem;
+  grid-template-columns: 1fr;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid rgb(11 11 7 / 0.12);
+}
+.taste-row dt {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--color-neon-deep);
+}
+.taste-row dd {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  line-height: 1.35;
+  color: var(--color-ink);
+}
+@media (min-width: 640px) {
+  .taste-row { grid-template-columns: 8rem 1fr; gap: 1.5rem; }
+  .taste-row dt { padding-top: 0.5rem; }
+}
+
+/* ============ ACCORDIONS ============ */
+.accordion summary {
+  cursor: pointer;
+  list-style: none;
+}
+.accordion summary::-webkit-details-marker { display: none; }
+
+.accordion summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.4rem 0.25rem;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--color-bone);
+  transition: color 0.3s;
+}
+.accordion summary:hover { color: var(--color-neon); }
+.accordion--light summary { color: var(--color-ink); }
+.accordion--light summary:hover { color: var(--color-neon-deep); }
+
+.accordion__icon {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.accordion__icon::before,
+.accordion__icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  background: var(--color-neon);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.accordion--light .accordion__icon::before,
+.accordion--light .accordion__icon::after { background: var(--color-neon-deep); }
+.accordion__icon::before { width: 14px; height: 1.5px; }
+.accordion__icon::after { width: 1.5px; height: 14px; }
+details[open] > summary .accordion__icon::after { transform: rotate(90deg); }
+
+.accordion__body { overflow: hidden; }
+.accordion__body p,
+.accordion__list {
+  padding: 0 0.25rem 1.5rem;
+  max-width: 44rem;
+  font-weight: 300;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: rgb(242 242 228 / 0.6);
+}
+.accordion--light .accordion__body p,
+.accordion--light .accordion__list { color: rgb(11 11 7 / 0.68); }
+.accordion__list li {
+  position: relative;
+  padding-left: 1.1rem;
+  margin-bottom: 0.4rem;
+}
+.accordion__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--color-neon-deep);
+}
+
+/* ============ PRODUCT CARDS (on light) ============ */
+.product-card {
+  position: relative;
+  border-radius: 1.5rem;
+  background: rgb(11 11 7 / 0.035);
+  border: 1px solid rgb(11 11 7 / 0.12);
+  padding: 1.25rem;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: border-color 0.4s, background-color 0.4s;
+}
+.product-card:hover {
+  border-color: var(--color-ink);
+  background: rgb(11 11 7 / 0.06);
+}
+.product-card--hero {
+  border-color: rgb(11 11 7 / 0.35);
+}
+
+.product-card__badge {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  z-index: 3;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--color-neon);
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.product-card__stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  aspect-ratio: 1 / 1;
+  transform-style: preserve-3d;
+}
+/* Each card zooms into its own jar within the shared trio photograph.
+   --jar-pos / --jar-zoom are set per card in the markup. */
+.product-photo {
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/honey-trio.jpg');
+  background-size: var(--jar-zoom, 200%);
+  background-position: var(--jar-pos, 50% 50%);
+  background-repeat: no-repeat;
+  transform: translateZ(30px) scale(1.06); /* depth layer for the tilt */
+  will-change: transform;
+  transition: filter 0.5s;
+}
+.product-card:hover .product-photo { filter: saturate(1.12) brightness(1.04); }
+.product-card__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 40%), rgb(249 254 46 / 0.3), transparent 60%);
+  mix-blend-mode: soft-light;
+  transition: opacity 0.4s;
+  opacity: 0.45;
+  pointer-events: none;
+}
+.product-card:hover .product-card__glow { opacity: 1; }
+
+.product-card__body { padding: 1.25rem 0.5rem 0.35rem; }
+.product-card__body h4 { color: var(--color-ink); }
+.product-card__body p { color: var(--color-ink); }
+
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid rgb(11 11 7 / 0.2);
+  border-radius: 999px;
+  padding: 0.25rem;
+}
+.qty__btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: var(--color-ink);
+  font-size: 1rem;
+  transition: background-color 0.25s;
+}
+.qty__btn:hover { background: var(--color-neon); }
+.qty__value {
+  min-width: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--color-ink);
+}
 
 /* ============ CONTACT ============ */
 .contact-row {

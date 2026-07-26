@@ -106,12 +106,9 @@ src/
 ## Page sections
 
 **Landing** — Hero → marquee → Our Beginning + Our Values → The Heart of Our
-Brand (divider) → Our Product Range (10 equal cards) → How We Work → Bring
-PureNgood Home → Contact.
-
-There is deliberately **no honey-specific section**. Honey is one of ten
-products and is presented exactly like the other nine; all product depth lives
-on the catalog page.
+Brand (divider) → **Featured Product: Deep Forest Raw Blossom Honey** →
+Our Product Range (10 equal cards) → How We Work → Bring PureNgood Home →
+Contact.
 
 **Products** (`/products.html`) — the full catalog: all 10 products, each with
 its icon, description, taste notes, suggested use and a Buy Now panel.
@@ -136,10 +133,22 @@ To regenerate `products.html` after editing the catalog, the product data lives
 in the generator script referenced in the commit history — or edit the static
 HTML directly, which is the source of truth.
 
+## Brand photography
+
+| File | Source | Used for |
+|---|---|---|
+| `honey-trio.jpg` | New Creatives / image 1 | The three size cards (each crops into its own jar) |
+| `honey-meadow.jpg` | New Creatives / Image 2 | Featured-product signature banner + social card |
+| `honey-studio.jpg` | New Creatives / Image 3 | Taste & Use column |
+| `logo.png` | New Creatives / Logo | Header, footer, preloader, favicon |
+
 ## Bits worth stealing
 
 - **One photo, three products.** All three jar cards crop into a single
-  `jars-trio.jpg` via `background-size`/`background-position` custom properties.
+  `honey-trio.jpg` via `background-size`/`background-position` custom
+  properties. The crop maths: to centre a feature at horizontal fraction `f`
+  of the image at zoom `z`, use `position = (0.5 − f·z) / (1 − z)`; vertically,
+  divide `z` by the image's aspect ratio first.
 - **The preloader can't trap the page.** It is driven by rAF, which browsers
   suspend in background tabs — so it skips entirely when `document.hidden` at
   boot, and carries a 4s hard failsafe.
@@ -156,5 +165,9 @@ A few values are placeholders and should be replaced before launch:
 - The **`Logo 3D.mp4`** in `New Creatives/` is unused: at 34 MB it would
   dominate the page weight. Worth re-exporting at ~2 MB if you want it in the
   preloader or hero.
-- The hero videos are 11–12 MB each. Re-exporting at ~4–5 Mbps (or WebM) would
-  noticeably speed up first paint on slow connections.
+- **The hero videos are the heaviest thing on the site** — `hero-desktop.mp4`
+  is 14.8 MB and `hero-mobile.mp4` is 10 MB, shipped as supplied because no
+  encoder is available in this environment. Everything else on the landing page
+  totals well under 2 MB. Re-exporting them at ~4–5 Mbps, or adding a WebM
+  source, would cut first paint dramatically on Indian mobile connections. Only
+  one of the two is ever downloaded, chosen at load by viewport width.

@@ -14,6 +14,7 @@ import { initHeroVideo } from './modules/hero-video';
 import { initAnimations } from './modules/animations';
 import { initTilt } from './modules/tilt';
 import { initCart } from './modules/cart';
+import { initAccordions } from './modules/accordions';
 import { initSound } from './modules/sound';
 
 function boot(): void {
@@ -26,6 +27,7 @@ function boot(): void {
   initAnimations(lenis, reduced);
   initTilt(reduced);
   initCart();
+  initAccordions(reduced);
   initSound();
   initNewsletter();
   initMapLink();
