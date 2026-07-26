@@ -1,7 +1,7 @@
 /**
  * Scroll storytelling. Every section gets a handcrafted entrance —
- * masked line reveals, word cascades, drawn SVG lines, colour journeys,
- * horizontal scrubbing — all driven by ScrollTrigger and synced to Lenis.
+ * masked line reveals, word cascades, clip-path photo unveils, parallax
+ * and stagger — all driven by ScrollTrigger and synced to Lenis.
  *
  * With prefers-reduced-motion, none of this runs: content is authored
  * visible-first, and initial "hidden" states are only applied here.
@@ -25,14 +25,10 @@ export function initAnimations(_lenis: Lenis | null, reduced: boolean): void {
 
   marquee();
   scrollHint();
-  storyTimeline();
-  communityJourney();
   imageReveals();
   dividerParallax();
-  featureCards();
+  floatCards();
   staggerGroups();
-  testimonialScrub();
-  counters();
 }
 
 /* ---------------------------------------------------------------- header */
@@ -106,7 +102,7 @@ function textReveals(): void {
     });
   });
 
-  // Word-by-word cascade for the emotional community paragraph.
+  // Word-by-word cascade for the emotional lead paragraphs.
   document.querySelectorAll<HTMLElement>('[data-reveal="words"]').forEach((el) => {
     const split = SplitText.create(el, { type: 'words' });
     gsap.from(split.words, {
@@ -154,9 +150,9 @@ function marquee(): void {
   while (track.scrollWidth < innerWidth * 2) {
     track.append(chunk.cloneNode(true));
   }
-  const width = (chunk as HTMLElement).offsetWidth + 40; // + gap
+  const width = (chunk as HTMLElement).offsetWidth + 32; // + gap
 
-  const tween = gsap.to(track, { x: -width, duration: 22, ease: 'none', repeat: -1 });
+  const tween = gsap.to(track, { x: -width, duration: 20, ease: 'none', repeat: -1 });
 
   // Scroll velocity nudges the marquee speed — the page feels alive.
   ScrollTrigger.create({
@@ -170,59 +166,11 @@ function marquee(): void {
   });
 }
 
-/* --------------------------------------------------- story: forest → jar */
-function storyTimeline(): void {
-  const line = document.getElementById('story-line') as unknown as SVGPathElement | null;
-  if (line) {
-    const length = line.getTotalLength();
-    gsap.set(line, { strokeDasharray: `${length}`, strokeDashoffset: length });
-    gsap.to(line, {
-      strokeDashoffset: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#story ol',
-        start: 'top 70%',
-        end: 'bottom 60%',
-        scrub: 0.6,
-      },
-    });
-  }
-
-  document.querySelectorAll<HTMLElement>('.story-step').forEach((step, i) => {
-    const fromLeft = i % 2 === 0;
-    gsap.from(step.children[0], {
-      x: fromLeft ? -70 : 70,
-      autoAlpha: 0,
-      duration: 1,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: step, start: 'top 78%' },
-    });
-  });
-}
-
-/* --------------------------------------- community: colour + portraits */
-function communityJourney(): void {
-  const section = document.getElementById('community');
-  if (!section) return;
-
-  // The background journeys from forest green to warm honey-brown as you read.
-  gsap.fromTo(
-    section,
-    { backgroundColor: '#24371F' },
-    {
-      backgroundColor: '#5C3D10',
-      ease: 'none',
-      scrollTrigger: { trigger: section, start: 'top 60%', end: 'bottom 90%', scrub: true },
-    }
-  );
-
-}
-
 /* ------------------------------------------------- photography reveals */
 /**
  * Signature move for every photograph: the frame unclips upward while the
  * image inside settles from a zoom, then drifts gently in parallax as it
- * crosses the viewport. Way more cinematic than a fade.
+ * crosses the viewport. Far more cinematic than a fade.
  */
 function imageReveals(): void {
   document.querySelectorAll<HTMLElement>('[data-img-reveal]').forEach((frame) => {
@@ -260,31 +208,21 @@ function dividerParallax(): void {
     {
       yPercent: 4,
       ease: 'none',
-      scrollTrigger: { trigger: '#divider', start: 'top bottom', end: 'bottom top', scrub: true },
+      scrollTrigger: { trigger: '#heart', start: 'top bottom', end: 'bottom top', scrub: true },
     }
   );
 }
 
-/* ------------------------------------------------------- feature cards */
-function featureCards(): void {
-  document.querySelectorAll<SVGElement>('.feature-icon .draw').forEach((path) => {
-    gsap.to(path, {
-      strokeDashoffset: 0,
-      duration: 1.4,
-      ease: 'power2.inOut',
-      scrollTrigger: { trigger: path, start: 'top 85%' },
-    });
-  });
-
-  // Idle float — each card breathes on its own rhythm.
+/* ------------------------------------------------- idle card breathing */
+function floatCards(): void {
   document.querySelectorAll<HTMLElement>('[data-float]').forEach((card, i) => {
     gsap.to(card, {
-      y: -8,
+      y: -7,
       duration: 2.4 + (i % 3) * 0.5,
       repeat: -1,
       yoyo: true,
       ease: 'sine.inOut',
-      delay: i * 0.2,
+      delay: i * 0.18,
     });
   });
 }
@@ -296,7 +234,7 @@ function staggerGroups(): void {
       autoAlpha: 0,
       x: -24,
       duration: 0.8,
-      stagger: 0.08,
+      stagger: 0.06,
       ease: 'power2.out',
       scrollTrigger: { trigger: group, start: 'top 85%' },
     });
@@ -304,63 +242,12 @@ function staggerGroups(): void {
 
   document.querySelectorAll<HTMLElement>('[data-stagger-cards]').forEach((grid) => {
     gsap.from(grid.children, {
-      y: 70,
+      y: 60,
       autoAlpha: 0,
-      rotation: () => gsap.utils.random(-2.5, 2.5),
       duration: 1,
       stagger: 0.09,
       ease: 'power3.out',
       scrollTrigger: { trigger: grid, start: 'top 82%' },
-    });
-  });
-}
-
-/* ------------------------------------------- testimonials: horizontal */
-function testimonialScrub(): void {
-  const wrap = document.getElementById('testimonial-track-wrap');
-  const track = document.getElementById('testimonial-track');
-  if (!wrap || !track) return;
-
-  // The whole shelf of cards glides sideways as the section crosses the viewport.
-  gsap.to(track, {
-    x: () => -(track.scrollWidth - innerWidth) * 0.92,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: wrap,
-      start: 'top 90%',
-      end: 'bottom 5%',
-      scrub: 0.5,
-      invalidateOnRefresh: true,
-    },
-  });
-
-  // Each card tilts slightly against the motion for depth.
-  track.querySelectorAll<HTMLElement>('.testimonial-card').forEach((card, i) => {
-    gsap.fromTo(
-      card,
-      { rotation: i % 2 ? 1.2 : -1.2, y: i % 2 ? 18 : 0 },
-      {
-        rotation: i % 2 ? -1.2 : 1.2,
-        ease: 'none',
-        scrollTrigger: { trigger: wrap, start: 'top bottom', end: 'bottom top', scrub: 1 },
-      }
-    );
-  });
-}
-
-/* --------------------------------------------------------- stat counters */
-function counters(): void {
-  document.querySelectorAll<HTMLElement>('[data-counter]').forEach((el) => {
-    const end = Number(el.dataset.counter ?? 0);
-    const state = { value: 0 };
-    gsap.to(state, {
-      value: end,
-      duration: 1.8,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 85%' },
-      onUpdate: () => {
-        el.textContent = Math.round(state.value).toLocaleString('en-IN');
-      },
     });
   });
 }

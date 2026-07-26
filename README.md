@@ -1,7 +1,8 @@
-# Pure N Good Eats 🍯
+# PureNgood Farms — *Good that is Pure*
 
-A cinematic, award-grade ecommerce experience for a premium wild-forest-honey brand
-from Villupuram, Tamil Nadu — built for speed first.
+A cinematic, award-grade site for a South Indian farm-foods brand: traditionally
+made foods crafted on village farms across the Western and Eastern Ghats of
+Tamil Nadu and Kerala. Built for speed first.
 
 ## Stack
 
@@ -13,9 +14,31 @@ from Villupuram, Tamil Nadu — built for speed first.
 | Scroll | **Lenis** | Buttery smooth scrolling, synced to ScrollTrigger via the GSAP ticker |
 | Hero | **Native video** (desktop + mobile cuts) | Only the matching cut is downloaded; poster fallback for reduced motion |
 
-**Total JS: ~62 KB gzipped.** All photography is pre-compressed (2–4 MB originals
-→ 140–340 KB), served with explicit dimensions and `loading="lazy"`, so there are
-zero layout shifts. Raw originals stay out of git; optimized copies live in `public/`.
+**Total JS: ~62 KB gzipped.** All photography is pre-compressed and served with
+explicit dimensions and `loading="lazy"`, so there are zero layout shifts.
+
+## The colour system
+
+The logo is pure **`#F9FE2E`** — a neon that is nearly invisible on white
+(**1.03:1**) but explosive on near-black (**18:1**). So the whole site is built
+on an ink canvas, with the neon reserved for accents, full-bleed brand blocks,
+and knockout type.
+
+| Token | Value | Role |
+|---|---|---|
+| `--color-ink` | `#0B0B07` | Canvas |
+| `--color-ink-soft` | `#14140E` | Elevated surfaces |
+| `--color-line` | `#26261C` | Hairlines |
+| `--color-neon` | `#F9FE2E` | The brand |
+| `--color-neon-deep` | `#5A6100` | The neon darkened, for use *on light* |
+| `--color-bone` | `#F2F2E4` | Light sections + text on ink |
+
+**The one rule that matters:** neon text only ever sits on ink. On the light
+(bone) sections it is swapped for `--color-neon-deep`, which keeps the brand hue
+at 5.9:1 instead of a completely unreadable 1.03:1.
+
+Type pairs **Instrument Serif** (editorial display) with **Outfit** (geometric
+sans, echoing the logo's rounded letterforms).
 
 ## Run it
 
@@ -29,57 +52,53 @@ npm run preview  # serve the production build
 ## Structure
 
 ```
-index.html               All semantic markup + SEO meta + JSON-LD schemas
+index.html               All markup + SEO meta + JSON-LD (LocalBusiness, Product)
 public/
-  images/                Optimized photography (story steps, community, products)
-  video/                 Hero films: hero-desktop.mp4 + hero-mobile.mp4
+  images/                logo.png + photography
+  video/                 hero-desktop.mp4 + hero-mobile.mp4
+  favicon.png
 src/
   main.ts                Boot orchestrator, preloader, newsletter, map link
-  styles/main.css        Tailwind theme tokens + component styles + grain texture
+  styles/main.css        Design tokens + components + film grain
   modules/
     motion.ts            Reduced-motion / touch / DPR helpers
     scroll.ts            Lenis ⟷ ScrollTrigger sync, smooth anchor scrolling
-    cursor.ts            Magnetic honey-drop cursor (velocity squash, blob morph, labels)
-    hero-video.ts        Cinematic hero: viewport-matched video source, visibility-
-                         aware playback, Ken-Burns drift, scroll depth parallax
-    animations.ts        Scroll storytelling: SplitText masked reveals, story line
-                         drawing, community colour journey, clip-path photo reveals
-                         with inner parallax, divider scrub, marquee w/ velocity,
-                         testimonial scrub, counters
-    tilt.ts              3D product-card tilt: photo counter-parallax on a deeper
-                         Z-plane, light-tracking glow overlay
-    cart.ts              Cart state + localStorage, fly-to-cart drop, slide drawer,
-                         WhatsApp checkout handoff
-    accordions.ts        Native <details> accordions with GSAP height animation
-    sound.ts             Optional ambient forest audio, synthesised with Web Audio
-                         (zero network bytes), muted by default
+    cursor.ts            Magnetic cursor (velocity squash, blob morph, labels)
+    hero-video.ts        Viewport-matched video, visibility-aware playback,
+                         Ken-Burns drift, scroll depth parallax
+    animations.ts        SplitText masked reveals, clip-path photo unveils with
+                         inner parallax, divider scrub, velocity-driven marquee
+    tilt.ts              3D product-card tilt with photo counter-parallax
+    cart.ts              Cart + localStorage, fly-to-cart, drawer, WhatsApp checkout
+    accordions.ts        Native <details> with GSAP height animation
+    sound.ts             Optional ambient audio, synthesised with Web Audio
 ```
 
-## Product imagery trick
+## Page sections
 
-All three product cards share ONE photograph (`jars-trio.jpg`, which shows the
-250g / 500g / 1kg jars side by side). Each card crops into its own jar with
-`background-size`/`background-position` custom properties — three "product
-renders" for the bytes of one image.
-
-## Performance & accessibility decisions
-
-- **One rAF owner**: GSAP's ticker drives Lenis; the WebGL loop pauses when the
-  hero is off-screen or the tab is hidden. DPR is capped at 1.75.
-- **Reduced motion**: `prefers-reduced-motion` disables Lenis, all scroll
-  animations, the cursor squash, and renders a single static WebGL frame.
-  Content is authored visible-first — hidden states only exist inside JS.
-- **Keyboard & SR**: skip link, focus-visible rings, native `<details>` for
-  accordions, `aria-live` cart counts, focus management in the cart dialog,
-  Escape-to-close, anchors move focus to their target.
-- **SEO**: LocalBusiness + Product JSON-LD, OpenGraph, Twitter cards, canonical,
-  semantic landmarks and a strict heading hierarchy — all server-rendered in
-  static HTML (no JS needed to crawl).
+Hero → marquee → Our Beginning + Our Values → The Heart of Our Brand (divider) →
+Featured Product: Deep Forest Raw Blossom Honey (provenance, taste & use, buy) →
+Our Product Range (10 items) → How We Work → Bring PureNgood Home → Contact.
 
 ## Bits worth stealing
 
-- The hero downloads only the video cut that matches the viewport, pauses when
-  off-screen, and layers Ken-Burns drift + scroll parallax over the film plane.
-- The marquee's speed is modulated by scroll velocity (`ScrollTrigger.getVelocity`).
-- The ambient forest sound is synthesised (filtered brown noise + LFO breathing +
-  randomised bird chirps) — no audio files shipped.
+- **One photo, three products.** All three jar cards crop into a single
+  `jars-trio.jpg` via `background-size`/`background-position` custom properties.
+- **The preloader can't trap the page.** It is driven by rAF, which browsers
+  suspend in background tabs — so it skips entirely when `document.hidden` at
+  boot, and carries a 4s hard failsafe.
+- **The marquee reacts to you**, modulating its speed from `ScrollTrigger.getVelocity()`.
+- **Ambient sound is synthesised** (filtered brown noise + LFO breathing +
+  randomised chirps) — no audio files shipped.
+
+## Notes for the owner
+
+A few values are placeholders and should be replaced before launch:
+
+- **Prices** (₹349 / ₹649 / ₹1,199) — the content document contains no pricing.
+- **Phone, WhatsApp, email, Instagram handle** — currently sample values.
+- The **`Logo 3D.mp4`** in `New Creatives/` is unused: at 34 MB it would
+  dominate the page weight. Worth re-exporting at ~2 MB if you want it in the
+  preloader or hero.
+- The hero videos are 11–12 MB each. Re-exporting at ~4–5 Mbps (or WebM) would
+  noticeably speed up first paint on slow connections.

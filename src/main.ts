@@ -39,9 +39,9 @@ function initMapLink(): void {
   map.style.cursor = 'pointer';
   map.setAttribute('role', 'link');
   map.setAttribute('tabindex', '0');
-  map.setAttribute('aria-label', 'Open Villupuram, Tamil Nadu in Google Maps');
+  map.setAttribute('aria-label', 'Open Ooty, The Nilgiris, Tamil Nadu in Google Maps');
   const openMaps = (): void => {
-    window.open('https://www.google.com/maps/place/Villupuram,+Tamil+Nadu', '_blank', 'noopener');
+    window.open('https://www.google.com/maps/place/Ooty,+Tamil+Nadu', '_blank', 'noopener');
   };
   map.addEventListener('click', openMaps);
   map.addEventListener('keydown', (e) => {
@@ -52,30 +52,33 @@ function initMapLink(): void {
   });
 }
 
-/** Preloader: honey drop draws + fills, then the curtain lifts into the hero intro. */
+/** Preloader: the logo settles into place, then the curtain lifts into the hero. */
 function runPreloader(reduced: boolean): void {
   const preloader = document.getElementById('preloader');
-  const drop = document.getElementById('preloader-drop');
-  if (!preloader || !drop) return;
+  const logo = document.getElementById('preloader-logo');
+  if (!preloader || !logo) return;
 
-  if (reduced) {
-    preloader.remove();
+  const dismiss = (): void => preloader.remove();
+
+  // The intro is driven by requestAnimationFrame, which browsers suspend in
+  // background tabs. Never let that trap the page: skip the animation outright
+  // if we boot hidden, and keep a hard failsafe for any other stall.
+  if (reduced || document.hidden) {
+    dismiss();
     return;
   }
-
-  const length = (drop as unknown as SVGPathElement).getTotalLength();
-  gsap.set(drop, { strokeDasharray: length, strokeDashoffset: length });
+  const failsafe = window.setTimeout(dismiss, 4000);
 
   gsap
-    .timeline()
-    .to(drop, { strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut' })
-    .to(drop, { fill: '#F5B942', duration: 0.35, ease: 'power1.in' }, '-=0.2')
+    .timeline({ onComplete: () => window.clearTimeout(failsafe) })
+    .from(logo, { scale: 0.82, autoAlpha: 0, duration: 0.9, ease: 'power3.out' })
+    .from(preloader.querySelector('p'), { y: 12, autoAlpha: 0, duration: 0.5 }, '-=0.4')
     .to(preloader, {
       yPercent: -100,
       duration: 0.9,
       ease: 'power4.inOut',
-      onComplete: () => preloader.remove(),
-    }, '+=0.15');
+      onComplete: dismiss,
+    }, '+=0.35');
 }
 
 function initNewsletter(): void {
@@ -90,7 +93,7 @@ function initNewsletter(): void {
       msg.textContent = 'Please enter a valid email address.';
       return;
     }
-    msg.textContent = 'Welcome to the hive — see you next season. 🍯';
+    msg.textContent = 'Welcome to the family — see you next season.';
     form.reset();
   });
 }

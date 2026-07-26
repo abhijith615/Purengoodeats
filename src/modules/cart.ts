@@ -82,7 +82,7 @@ function flyToCart(from: HTMLElement): void {
 
   const drop = document.createElement('span');
   drop.setAttribute('aria-hidden', 'true');
-  drop.style.cssText = `position:fixed;z-index:130;left:${a.left + a.width / 2}px;top:${a.top}px;width:14px;height:14px;border-radius:60% 40% 55% 45%/50% 55% 45% 60%;background:#E8A020;pointer-events:none;`;
+  drop.style.cssText = `position:fixed;z-index:130;left:${a.left + a.width / 2}px;top:${a.top}px;width:14px;height:14px;border-radius:60% 40% 55% 45%/50% 55% 45% 60%;background:#F9FE2E;pointer-events:none;`;
   document.body.append(drop);
 
   gsap.to(drop, {
@@ -142,7 +142,7 @@ function bindDrawer(): void {
     // Demo checkout: hand off to WhatsApp ordering.
     const lines = cart.map((i) => `${i.qty}× ${i.name}`).join(', ');
     window.open(
-      `https://wa.me/919876543210?text=${encodeURIComponent(`Hi! I'd like to order: ${lines}. Total ${inr(total)}.`)}`,
+      `https://wa.me/919876543210?text=${encodeURIComponent(`Hi PureNgood! I'd like to order: ${lines}. Total ${inr(total)}.`)}`,
       '_blank',
       'noopener'
     );
@@ -181,7 +181,7 @@ function renderCart(): void {
   totalEl.textContent = inr(total);
 
   if (cart.length === 0) {
-    list.innerHTML = `<p id="cart-empty" class="mt-10 text-center font-sans text-sm text-cocoa/50">Your cart is empty — the bees are waiting.</p>`;
+    list.innerHTML = `<p id="cart-empty" class="mt-10 text-center font-sans text-sm text-bone/40">Your basket is empty — the bees are still working.</p>`;
     return;
   }
 
@@ -189,18 +189,18 @@ function renderCart(): void {
     .map(
       (i) => `
       <div class="cart-item" data-id="${i.id}">
-        <span class="cart-item__thumb" aria-hidden="true">${i.name.match(/\d+g/)?.[0] ?? '🍯'}</span>
+        <span class="cart-item__thumb" aria-hidden="true">${i.name.match(/\d+\s*(?:kg|g)\b/i)?.[0] ?? '🍯'}</span>
         <div>
-          <p class="font-serif">${i.name}</p>
-          <div class="mt-1 flex items-center gap-2 font-sans text-sm text-cocoa/60">
-            <button data-cart-action="dec" data-id="${i.id}" class="h-6 w-6 rounded-full border border-cocoa/20 leading-none hover:bg-honey" aria-label="Decrease ${i.name} quantity">−</button>
+          <p class="font-display text-lg leading-tight">${i.name}</p>
+          <div class="mt-1 flex items-center gap-2 font-sans text-sm text-bone/60">
+            <button data-cart-action="dec" data-id="${i.id}" class="h-6 w-6 rounded-full border border-line leading-none hover:bg-neon hover:text-ink" aria-label="Decrease ${i.name} quantity">−</button>
             <span aria-live="polite">${i.qty}</span>
-            <button data-cart-action="inc" data-id="${i.id}" class="h-6 w-6 rounded-full border border-cocoa/20 leading-none hover:bg-honey" aria-label="Increase ${i.name} quantity">+</button>
+            <button data-cart-action="inc" data-id="${i.id}" class="h-6 w-6 rounded-full border border-line leading-none hover:bg-neon hover:text-ink" aria-label="Increase ${i.name} quantity">+</button>
           </div>
         </div>
         <div class="text-right">
           <p class="font-sans">${inr(i.price * i.qty)}</p>
-          <button data-cart-action="remove" data-id="${i.id}" class="mt-1 font-sans text-xs text-cocoa/40 underline hover:text-forest-honey" aria-label="Remove ${i.name} from cart">Remove</button>
+          <button data-cart-action="remove" data-id="${i.id}" class="mt-1 font-sans text-xs text-bone/40 underline hover:text-neon" aria-label="Remove ${i.name} from cart">Remove</button>
         </div>
       </div>`
     )

@@ -9,3 +9,7 @@ Thumbs.db
 /*.jpg
 /*.png
 /*.mp4
+
+# Source creatives (originals stay local)
+/New Creatives/
+/*.docx
