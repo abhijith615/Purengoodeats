@@ -66,6 +66,15 @@ rhythm is preserved exactly. Reveals then animate from `-135%` (`MASK_OFFSET` in
 never put a `<figcaption>` inside `.img-reveal` — that frame clips its overflow
 to animate, and will eat the caption. Wrap it: `.img-figure > .img-reveal + figcaption`.
 
+## Animation vs. layout
+
+Entrance animations move elements with `transform`, which lifts them **out of
+layout flow** — so a card can be painted over whatever sits below it. Cards
+travel `CARD_ENTRANCE_Y` (40px, in `animations.ts`); every grid must therefore
+keep a bottom margin comfortably larger than that. The catalog CTA rows use
+`mt-24` (96px) for this reason. A `mt-14` (56px) gap against a 60px travel is
+exactly what put the "View Full Catalog" button underneath the product cards.
+
 ## Structure
 
 ```
@@ -97,9 +106,12 @@ src/
 ## Page sections
 
 **Landing** — Hero → marquee → Our Beginning + Our Values → The Heart of Our
-Brand (divider) → Featured Product: Deep Forest Raw Blossom Honey (provenance,
-taste & use, buy) → Our Product Range (10 equal cards) → How We Work → Bring
+Brand (divider) → Our Product Range (10 equal cards) → How We Work → Bring
 PureNgood Home → Contact.
+
+There is deliberately **no honey-specific section**. Honey is one of ten
+products and is presented exactly like the other nine; all product depth lives
+on the catalog page.
 
 **Products** (`/products.html`) — the full catalog: all 10 products, each with
 its icon, description, taste notes, suggested use and a Buy Now panel.

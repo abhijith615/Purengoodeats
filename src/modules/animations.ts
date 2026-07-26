@@ -21,6 +21,13 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
  */
 const MASK_OFFSET = 135;
 
+/**
+ * How far a card travels on entry. Cards are transformed, so they escape their
+ * layout box — this must stay well under the margin separating a grid from the
+ * content beneath it, or the last row lands on top of it.
+ */
+const CARD_ENTRANCE_Y = 40;
+
 export function initAnimations(_lenis: Lenis | null, reduced: boolean): void {
   initHeader();
   if (reduced) return;
@@ -272,8 +279,11 @@ function staggerGroups(): void {
   });
 
   document.querySelectorAll<HTMLElement>('[data-stagger-cards]').forEach((grid) => {
+    // Keep this offset comfortably smaller than the margin below any grid —
+    // a transform lifts cards out of layout flow, so a larger travel makes the
+    // last row visually overlap whatever follows it.
     gsap.from(grid.children, {
-      y: 60,
+      y: CARD_ENTRANCE_Y,
       autoAlpha: 0,
       duration: 1,
       stagger: 0.09,
