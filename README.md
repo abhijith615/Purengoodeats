@@ -69,11 +69,21 @@ to animate, and will eat the caption. Wrap it: `.img-figure > .img-reveal + figc
 ## Animation vs. layout
 
 Entrance animations move elements with `transform`, which lifts them **out of
-layout flow** — so a card can be painted over whatever sits below it. Cards
-travel `CARD_ENTRANCE_Y` (40px, in `animations.ts`); every grid must therefore
-keep a bottom margin comfortably larger than that. The catalog CTA rows use
-`mt-24` (96px) for this reason. A `mt-14` (56px) gap against a 60px travel is
-exactly what put the "View Full Catalog" button underneath the product cards.
+layout flow** — so an element can be painted over whatever sits beside or below
+it. Two rules keep this from producing overlaps:
+
+1. **Entrance travel must stay under the gap it moves across.** Cards travel
+   `CARD_ENTRANCE_Y` (40px, `animations.ts`), so every grid keeps a bottom
+   margin comfortably larger — the catalog CTA rows use `mt-24` (96px). A
+   `mt-14` (56px) gap against a 60px travel is exactly what put "View Full
+   Catalog" underneath the product cards. Likewise the hero CTAs travel 12px
+   and sit in a 20px row gap, because they stack on mobile.
+2. **Magnetic pull is capped at `MAX_PULL` (10px, `cursor.ts`).** The pull is
+   proportional to element size, so before the cap a 253px-wide button drifted
+   43px and swallowed the button next to it. Keep at least 10px between any two
+   `[data-magnetic]` elements — and don't put `data-magnetic` on full-width
+   rows, where shifting the row and its hairline border reads as a glitch
+   (that's why the contact rows use only a cursor label and a padding slide).
 
 ## Structure
 

@@ -91,7 +91,16 @@ export function initCursor(): void {
   initMagnetic(reduced);
 }
 
-/** Elements with [data-magnetic] gently lean toward the pointer. */
+/**
+ * Elements with [data-magnetic] gently lean toward the pointer.
+ *
+ * The pull is proportional to the element's size, so a wide button could
+ * travel far enough to collide with its neighbour — a 253px-wide CTA drifted
+ * 43px into the button beside it. MAX_PULL caps the displacement so the effect
+ * stays a lean, never a leap, whatever the element's width.
+ */
+const MAX_PULL = 10; // px — stays below the tightest gap between two magnetic elements
+
 function initMagnetic(reduced: boolean): void {
   if (reduced) return;
 
@@ -102,8 +111,13 @@ function initMagnetic(reduced: boolean): void {
 
     el.addEventListener('pointermove', (e) => {
       const r = el.getBoundingClientRect();
-      xTo((e.clientX - (r.left + r.width / 2)) * strength);
-      yTo((e.clientY - (r.top + r.height / 2)) * strength);
+      const dx = (e.clientX - (r.left + r.width / 2)) * strength;
+      const dy = (e.clientY - (r.top + r.height / 2)) * strength;
+      // Clamp the vector's length, preserving its direction.
+      const dist = Math.hypot(dx, dy);
+      const scale = dist > MAX_PULL ? MAX_PULL / dist : 1;
+      xTo(dx * scale);
+      yTo(dy * scale);
     });
     el.addEventListener('pointerleave', () => {
       xTo(0);

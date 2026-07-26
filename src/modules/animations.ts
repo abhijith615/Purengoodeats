@@ -99,7 +99,9 @@ function heroIntro(): void {
     .from(split.lines, { yPercent: MASK_OFFSET, duration: 1.2, stagger: 0.12 })
     .from('#hero-eyebrow', { y: 24, autoAlpha: 0, duration: 0.8 }, '-=0.8')
     .from('#hero-copy', { y: 30, autoAlpha: 0, duration: 0.8 }, '-=0.6')
-    .from('#hero-ctas > *', { y: 24, autoAlpha: 0, duration: 0.7, stagger: 0.1 }, '-=0.5')
+    // Travel stays under the CTA row gap — the buttons stack on mobile, and a
+    // taller hop would visibly overlap them mid-stagger on every page load.
+    .from('#hero-ctas > *', { y: 12, autoAlpha: 0, duration: 0.7, stagger: 0.1 }, '-=0.5')
     .from('#hero-scroll-hint', { autoAlpha: 0, duration: 0.6 }, '-=0.3');
 
   // Cinematic exit: the headline sinks and softens as you scroll away.
