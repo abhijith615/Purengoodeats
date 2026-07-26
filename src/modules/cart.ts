@@ -16,12 +16,48 @@ const inr = (n: number): string => `₹${n.toLocaleString('en-IN')}`;
 
 let cart: CartItem[] = [];
 let lastFocused: HTMLElement | null = null;
+/** Assigned by bindDrawer so "Buy Now" can reveal the cart it just filled. */
+let openCart: () => void = () => {};
 
 export function initCart(): void {
   cart = load();
   bindProductCards();
+  bindBuyNow();
   bindDrawer();
   renderCart();
+}
+
+/**
+ * "Buy Now" appears on every product so no category is second-class.
+ * Products that carry a price go straight into the cart; the rest — whose
+ * pricing is seasonal and quoted per batch — open a pre-filled WhatsApp
+ * order instead. Give a product a price and it upgrades automatically.
+ */
+function bindBuyNow(): void {
+  document.querySelectorAll<HTMLElement>('[data-buy-now]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest<HTMLElement>('.catalog-item, .prod-card');
+      const select = card?.querySelector<HTMLSelectElement>('[data-size-select]');
+      const chosen = select?.selectedOptions[0];
+
+      const price = Number(chosen?.dataset.price ?? btn.dataset.price ?? 0);
+      const name = chosen?.dataset.name ?? btn.dataset.name ?? 'PureNgood product';
+
+      if (price > 0) {
+        addItem({ id: btn.dataset.productId + (chosen ? `-${chosen.value}` : ''), name, price, qty: 1 });
+        flyToCart(btn);
+        openCart();
+        return;
+      }
+      window.open(
+        `https://wa.me/919876543210?text=${encodeURIComponent(
+          `Hi PureNgood! I'd like to order ${name}. Could you share pricing and available sizes?`
+        )}`,
+        '_blank',
+        'noopener'
+      );
+    });
+  });
 }
 
 /* ------------------------------------------------------------- storage */
@@ -117,6 +153,7 @@ function bindDrawer(): void {
     closeBtn.focus();
     document.addEventListener('keydown', onKeydown);
   };
+  openCart = open;
   const close = (): void => {
     drawer.setAttribute('aria-hidden', 'true');
     gsap.to(overlay, {

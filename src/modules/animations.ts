@@ -13,6 +13,14 @@ import { SplitText } from 'gsap/SplitText';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
+/**
+ * How far below its mask a line starts, as a % of its own height.
+ * The masks are padded 0.2em taller than the line box so tight display
+ * line-heights don't shear descenders (see main.css), so 100% is no longer
+ * far enough to hide the copy — this clears the padded box at every size.
+ */
+const MASK_OFFSET = 135;
+
 export function initAnimations(_lenis: Lenis | null, reduced: boolean): void {
   initHeader();
   if (reduced) return;
@@ -29,6 +37,29 @@ export function initAnimations(_lenis: Lenis | null, reduced: boolean): void {
   dividerParallax();
   floatCards();
   staggerGroups();
+}
+
+/**
+ * Reduced set for the catalog page: text reveals and staggered entrances,
+ * but none of the landing-page-only scroll storytelling.
+ */
+export function initCatalogAnimations(reduced: boolean): void {
+  if (reduced) return;
+  document.fonts.ready.then(textReveals);
+  catalogItems();
+}
+
+/** Each catalog row slides in from the left as it enters the viewport. */
+function catalogItems(): void {
+  document.querySelectorAll<HTMLElement>('.catalog-item').forEach((item) => {
+    gsap.from(item, {
+      y: 40,
+      autoAlpha: 0,
+      duration: 0.9,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: item, start: 'top 88%' },
+    });
+  });
 }
 
 /* ---------------------------------------------------------------- header */
@@ -58,7 +89,7 @@ function heroIntro(): void {
 
   gsap
     .timeline({ delay: 1.5, defaults: { ease: 'power4.out' } }) // after preloader
-    .from(split.lines, { yPercent: 110, duration: 1.2, stagger: 0.12 })
+    .from(split.lines, { yPercent: MASK_OFFSET, duration: 1.2, stagger: 0.12 })
     .from('#hero-eyebrow', { y: 24, autoAlpha: 0, duration: 0.8 }, '-=0.8')
     .from('#hero-copy', { y: 30, autoAlpha: 0, duration: 0.8 }, '-=0.6')
     .from('#hero-ctas > *', { y: 24, autoAlpha: 0, duration: 0.7, stagger: 0.1 }, '-=0.5')
@@ -94,7 +125,7 @@ function textReveals(): void {
   document.querySelectorAll<HTMLElement>('[data-reveal="lines"]').forEach((el) => {
     const split = SplitText.create(el, { type: 'lines', mask: 'lines' });
     gsap.from(split.lines, {
-      yPercent: 110,
+      yPercent: MASK_OFFSET,
       duration: 1.1,
       stagger: 0.1,
       ease: 'power4.out',
@@ -123,7 +154,7 @@ function textReveals(): void {
     wrap.className = 'split-line-mask inline-block';
     el.replaceChildren(...wrapContents(el, wrap));
     gsap.from(wrap.firstChild, {
-      yPercent: 120,
+      yPercent: MASK_OFFSET,
       duration: 0.9,
       ease: 'power3.out',
       scrollTrigger: { trigger: el, start: 'top 90%' },

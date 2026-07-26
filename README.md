@@ -49,21 +49,41 @@ npm run build    # type-checks, then builds to dist/
 npm run preview  # serve the production build
 ```
 
+## Typography gotcha worth knowing
+
+Instrument Serif has a **1.30em content area** (0.99 ascent + 0.31 descent) with
+ink descenders reaching **0.22em** below the baseline. Our display line-heights
+are deliberately tighter than that (0.86–1.1), so the line box is *shorter than
+the glyphs* — and GSAP's `mask: 'lines'` wrapper (`overflow: clip`) shears the
+tails off every g, y, p and j.
+
+The fix in `main.css` extends each mask's clip box downward with `padding-bottom`
+and pulls the next line back up with an equal negative margin, so the tight
+rhythm is preserved exactly. Reveals then animate from `-135%` (`MASK_OFFSET` in
+`animations.ts`) so copy still starts fully outside the taller box.
+
+**If you add a new masked heading, add its selector to that rule.** Likewise,
+never put a `<figcaption>` inside `.img-reveal` — that frame clips its overflow
+to animate, and will eat the caption. Wrap it: `.img-figure > .img-reveal + figcaption`.
+
 ## Structure
 
 ```
-index.html               All markup + SEO meta + JSON-LD (LocalBusiness, Product)
+index.html               Landing page + SEO meta + JSON-LD (LocalBusiness, Product)
+products.html            Full catalog (generated markup, static for SEO)
 public/
   images/                logo.png + photography
   video/                 hero-desktop.mp4 + hero-mobile.mp4
   favicon.png
 src/
-  main.ts                Boot orchestrator, preloader, newsletter, map link
+  main.ts                Landing page entry: preloader, newsletter, map link
+  products.ts            Catalog page entry
   styles/main.css        Design tokens + components + film grain
   modules/
     motion.ts            Reduced-motion / touch / DPR helpers
     scroll.ts            Lenis ⟷ ScrollTrigger sync, smooth anchor scrolling
     cursor.ts            Magnetic cursor (velocity squash, blob morph, labels)
+    nav.ts               Full-screen mobile menu with focus trap (below lg)
     hero-video.ts        Viewport-matched video, visibility-aware playback,
                          Ken-Burns drift, scroll depth parallax
     animations.ts        SplitText masked reveals, clip-path photo unveils with
@@ -76,9 +96,33 @@ src/
 
 ## Page sections
 
-Hero → marquee → Our Beginning + Our Values → The Heart of Our Brand (divider) →
-Featured Product: Deep Forest Raw Blossom Honey (provenance, taste & use, buy) →
-Our Product Range (10 items) → How We Work → Bring PureNgood Home → Contact.
+**Landing** — Hero → marquee → Our Beginning + Our Values → The Heart of Our
+Brand (divider) → Featured Product: Deep Forest Raw Blossom Honey (provenance,
+taste & use, buy) → Our Product Range (10 equal cards) → How We Work → Bring
+PureNgood Home → Contact.
+
+**Products** (`/products.html`) — the full catalog: all 10 products, each with
+its icon, description, taste notes, suggested use and a Buy Now panel.
+
+## How "Buy Now" works
+
+Every product carries the same Buy Now button — no category is second-class.
+Behaviour is driven purely by whether a price exists:
+
+| Product state | Buy Now does | Card shows |
+|---|---|---|
+| Has a price (honey, 3 sizes) | Adds the selected size to the cart and opens the drawer | `From ₹349` |
+| No price yet (the other nine) | Opens a pre-filled WhatsApp order for that product | `Price on request` |
+
+The nine unpriced products are unpriced because **the content brief contains no
+pricing** — nothing was invented. To upgrade any of them to real cart checkout,
+add `data-price="..."` to its `[data-buy-now]` button (or a `[data-size-select]`
+with `data-price` / `data-name` options, as honey has); `cart.ts` picks it up
+with no other change.
+
+To regenerate `products.html` after editing the catalog, the product data lives
+in the generator script referenced in the commit history — or edit the static
+HTML directly, which is the source of truth.
 
 ## Bits worth stealing
 

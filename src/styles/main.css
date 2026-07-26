@@ -162,11 +162,34 @@ body::after {
   max-width: 34rem;
 }
 
-/* SplitText line masking */
+/* ---- SplitText line masking -------------------------------------------
+   Instrument Serif has a 1.30em content area (0.99 ascent + 0.31 descent)
+   and ink descenders reaching 0.22em below the baseline. Our display
+   line-heights are deliberately tighter than that (0.86–1.1), so the line
+   box is SHORTER than the glyphs — and GSAP's mask wrapper (overflow: clip)
+   would shear the tails off every g, y, p and j.
+
+   Fix: extend each mask's clip box downward with padding, then pull the
+   following line back up with an equal negative margin so the tight visual
+   rhythm is preserved exactly. Reveals animate from -135% (see
+   animations.ts) so copy still starts fully outside the taller box. */
+[data-reveal="lines"] > div,
+[data-reveal="words"] > div,
+#hero-title > div {
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+}
+/* The hero runs the tightest leading on the site (0.86) and its italic
+   swash on "Pure" reaches past the metric descender — give it more room. */
+#hero-title > div {
+  padding-bottom: 0.3em;
+  margin-bottom: -0.3em;
+}
+
 .split-line-mask {
   overflow: hidden;
-  padding-bottom: 0.1em; /* keep descenders inside the mask */
-  margin-bottom: -0.1em;
+  padding-bottom: 0.22em; /* keep descenders inside the mask */
+  margin-bottom: -0.22em;
 }
 
 /* ============ BUTTONS ============ */
@@ -256,6 +279,8 @@ body::after {
 }
 .nav-link:hover { color: var(--color-neon); }
 .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+.nav-link.is-current { color: var(--color-neon); }
+.nav-link.is-current::after { transform: scaleX(1); }
 
 #site-header.is-solid {
   background: rgb(11 11 7 / 0.82);
@@ -263,6 +288,55 @@ body::after {
   border-bottom: 1px solid var(--color-line);
 }
 #site-header.is-hidden { transform: translateY(-100%); }
+
+/* ---- Mobile menu ---- */
+.burger {
+  display: block;
+  position: relative;
+  width: 16px;
+  height: 10px;
+}
+.burger span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s;
+}
+.burger span:first-child { top: 0; }
+.burger span:last-child { bottom: 0; }
+#menu-toggle.is-open .burger span:first-child { transform: translateY(4.25px) rotate(45deg); }
+#menu-toggle.is-open .burger span:last-child { transform: translateY(-4.25px) rotate(-45deg); }
+
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  display: grid;
+  place-items: center;
+  background: rgb(11 11 7 / 0.97);
+  backdrop-filter: blur(18px);
+  opacity: 0;
+}
+.mobile-menu nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-align: center;
+}
+.mobile-menu a {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 9vw, 3rem);
+  line-height: 1.28;
+  color: var(--color-bone);
+  transition: color 0.3s;
+}
+.mobile-menu a:hover,
+.mobile-menu a:focus-visible { color: var(--color-neon); }
+@media (min-width: 1024px) {
+  .mobile-menu { display: none; }
+}
 
 #sound-toggle .sound-wave { opacity: 0.25; transition: opacity 0.3s; }
 #sound-toggle[aria-pressed="true"] .sound-wave { opacity: 1; }
@@ -282,6 +356,9 @@ body::after {
   object-fit: cover;
   will-change: transform;
 }
+/* Captions must live OUTSIDE .img-reveal — that frame clips its overflow to
+   animate the reveal, and would shear the caption off entirely. */
+.img-figure { display: block; }
 .img-caption {
   margin-top: 0.85rem;
   font-family: var(--font-sans);
@@ -471,6 +548,241 @@ details[open] > summary .accordion__icon::after { transform: rotate(90deg); }
   height: 5px;
   border-radius: 999px;
   background: var(--color-neon-deep);
+}
+
+/* ============ PRODUCT CARDS (equal-weight catalog grid) ============
+   Every product in the range gets the identical card, icon treatment and
+   Buy Now button — no product is visually privileged over another. */
+.prod-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 768px) { .prod-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1280px) { .prod-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+
+.prod-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 1.25rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-ink-soft);
+  padding: 1.5rem 1.25rem 1.25rem;
+  transition: border-color 0.4s, background-color 0.4s, transform 0.4s;
+  will-change: transform;
+}
+.prod-card:hover {
+  border-color: rgb(249 254 46 / 0.5);
+  background: #191912;
+}
+
+.prod-card__icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  border: 1px solid rgb(249 254 46 / 0.28);
+  background: rgb(249 254 46 / 0.07);
+  color: var(--color-neon);
+  margin-bottom: 1.25rem;
+  transition: background-color 0.4s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.prod-card__icon svg { width: 26px; height: 26px; }
+.prod-card:hover .prod-card__icon {
+  background: rgb(249 254 46 / 0.16);
+  transform: translateY(-3px) rotate(-6deg);
+}
+
+.prod-card__name {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1.12;
+  color: var(--color-bone);
+}
+.prod-card__blurb {
+  margin-top: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgb(242 242 228 / 0.5);
+  flex: 1;
+}
+.prod-card__price {
+  margin-top: 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-neon);
+}
+.prod-card__price--muted {
+  color: rgb(242 242 228 / 0.45);
+  font-weight: 300;
+}
+.prod-card__actions {
+  margin-top: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.btn-buy {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  background: var(--color-neon);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
+  transition: box-shadow 0.35s, background-color 0.3s;
+}
+.btn-buy:hover { box-shadow: 0 8px 26px rgb(249 254 46 / 0.28); }
+
+.btn-details {
+  display: block;
+  width: 100%;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  color: rgb(242 242 228 / 0.65);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-align: center;
+  transition: border-color 0.3s, color 0.3s;
+}
+.btn-details:hover { border-color: var(--color-neon); color: var(--color-neon); }
+
+/* ============ CATALOG (products page) ============ */
+.catalog-item {
+  display: grid;
+  gap: 1.75rem;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--color-line);
+  scroll-margin-top: 6rem;
+}
+@media (min-width: 900px) {
+  .catalog-item { grid-template-columns: 7.5rem 1fr 16rem; gap: 3rem; align-items: start; }
+}
+.catalog-item__media {
+  display: grid;
+  place-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 1.25rem;
+  border: 1px solid rgb(249 254 46 / 0.25);
+  background: rgb(249 254 46 / 0.06);
+  color: var(--color-neon);
+  transition: background-color 0.4s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.catalog-item__media svg { width: 46px; height: 46px; }
+.catalog-item:hover .catalog-item__media {
+  background: rgb(249 254 46 / 0.14);
+  transform: rotate(-5deg);
+}
+.catalog-item__num {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--color-neon);
+}
+.catalog-item h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.4vw, 2.6rem);
+  line-height: 1.08;
+  margin-top: 0.6rem;
+  color: var(--color-bone);
+}
+.catalog-item__blurb {
+  margin-top: 0.75rem;
+  max-width: 34rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgb(242 242 228 / 0.6);
+}
+.catalog-item__buy {
+  border-radius: 1.25rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-ink-soft);
+  padding: 1.35rem;
+}
+.catalog-item__price {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  color: var(--color-neon);
+  line-height: 1.2;
+}
+.catalog-item__price--muted {
+  font-size: 1.05rem;
+  color: rgb(242 242 228 / 0.55);
+}
+.catalog-item__note {
+  margin-top: 0.35rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  color: rgb(242 242 228 / 0.4);
+}
+.size-select {
+  width: 100%;
+  margin-top: 0.9rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+}
+.size-select:focus-visible { border-color: var(--color-neon); }
+.catalog-item__buy .btn-buy { margin-top: 0.75rem; }
+
+.catalog-detail {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 1.5rem;
+}
+@media (min-width: 640px) {
+  .catalog-detail { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+}
+.catalog-detail h3 {
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--color-neon);
+  margin-bottom: 0.7rem;
+}
+.catalog-detail p,
+.catalog-detail ul {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgb(242 242 228 / 0.55);
+}
+.catalog-detail li {
+  position: relative;
+  padding-left: 1rem;
+  margin-bottom: 0.35rem;
+}
+.catalog-detail li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--color-neon);
 }
 
 /* ============ PRODUCT RANGE LIST ============ */

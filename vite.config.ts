@@ -1,3 +1,4 @@
+import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -7,6 +8,10 @@ export default defineConfig({
     target: 'es2022',
     cssMinify: true,
     rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        products: resolve(__dirname, 'products.html'),
+      },
       output: {
         // Split vendor chunks so GSAP/OGL cache independently of app code
         manualChunks: {

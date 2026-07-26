@@ -9,6 +9,7 @@ import { gsap } from 'gsap';
 import { prefersReducedMotion } from './modules/motion';
 import { initScroll } from './modules/scroll';
 import { initCursor } from './modules/cursor';
+import { initNav } from './modules/nav';
 import { initHeroVideo } from './modules/hero-video';
 import { initAnimations } from './modules/animations';
 import { initTilt } from './modules/tilt';
@@ -21,6 +22,7 @@ function boot(): void {
 
   const lenis = initScroll();
   initCursor();
+  initNav();
   initHeroVideo(reduced);
   initAnimations(lenis, reduced);
   initTilt(reduced);
