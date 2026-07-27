@@ -50,7 +50,7 @@ function bindBuyNow(): void {
         return;
       }
       window.open(
-        `https://wa.me/919876543210?text=${encodeURIComponent(
+        `https://wa.me/919095189636?text=${encodeURIComponent(
           `Hi PureNgood! I'd like to order ${name}. Could you share pricing and available sizes?`
         )}`,
         '_blank',
@@ -179,7 +179,7 @@ function bindDrawer(): void {
     // Demo checkout: hand off to WhatsApp ordering.
     const lines = cart.map((i) => `${i.qty}× ${i.name}`).join(', ');
     window.open(
-      `https://wa.me/919876543210?text=${encodeURIComponent(`Hi PureNgood! I'd like to order: ${lines}. Total ${inr(total)}.`)}`,
+      `https://wa.me/919095189636?text=${encodeURIComponent(`Hi PureNgood! I'd like to order: ${lines}. Total ${inr(total)}.`)}`,
       '_blank',
       'noopener'
     );
