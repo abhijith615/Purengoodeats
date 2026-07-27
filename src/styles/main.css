@@ -453,23 +453,23 @@ body::after {
   background: #191912;
 }
 
-.prod-card__icon {
-  display: grid;
-  place-items: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 999px;
-  border: 1px solid rgb(249 254 46 / 0.28);
-  background: rgb(249 254 46 / 0.07);
-  color: var(--color-neon);
-  margin-bottom: 1.25rem;
-  transition: background-color 0.4s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+/* Real packaging photography, square so every card reads consistently. */
+.prod-card__media {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.9rem;
+  background: #100f0a;
+  margin-bottom: 1.15rem;
 }
-.prod-card__icon svg { width: 26px; height: 26px; }
-.prod-card:hover .prod-card__icon {
-  background: rgb(249 254 46 / 0.16);
-  transform: translateY(-3px) rotate(-6deg);
+.prod-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
+.prod-card:hover .prod-card__media img { transform: scale(1.06); }
 
 .prod-card__name {
   font-family: var(--font-display);
@@ -544,24 +544,26 @@ body::after {
   scroll-margin-top: 6rem;
 }
 @media (min-width: 900px) {
-  .catalog-item { grid-template-columns: 7.5rem 1fr 16rem; gap: 3rem; align-items: start; }
+  .catalog-item { grid-template-columns: 15rem 1fr 16rem; gap: 3rem; align-items: start; }
 }
 .catalog-item__media {
-  display: grid;
-  place-items: center;
-  width: 100px;
-  height: 100px;
-  border-radius: 1.25rem;
-  border: 1px solid rgb(249 254 46 / 0.25);
-  background: rgb(249 254 46 / 0.06);
-  color: var(--color-neon);
-  transition: background-color 0.4s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  display: block;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 15rem;
+  aspect-ratio: 1 / 1;
+  border-radius: 1.1rem;
+  border: 1px solid var(--color-line);
+  background: #100f0a;
 }
-.catalog-item__media svg { width: 46px; height: 46px; }
-.catalog-item:hover .catalog-item__media {
-  background: rgb(249 254 46 / 0.14);
-  transform: rotate(-5deg);
+.catalog-item__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
+.catalog-item:hover .catalog-item__media img { transform: scale(1.05); }
 .catalog-item__num {
   font-family: var(--font-sans);
   font-size: 0.68rem;

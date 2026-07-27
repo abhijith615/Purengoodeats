@@ -151,6 +151,13 @@ HTML directly, which is the source of truth.
 | `honey-meadow.jpg` | New Creatives / Image 2 | Featured-product signature banner + social card |
 | `honey-studio.jpg` | New Creatives / Image 3 | Taste & Use column |
 | `logo.png` | New Creatives / Logo | Header, footer, preloader, favicon |
+| `products/<slug>.jpg` | New Creatives / *&lt;product name&gt;* | Packaging shot on the range grid and the catalog |
+
+**Product photography.** Each of the ten products has a square packaging shot in
+`public/images/products/`, named by the product's slug — the same id used on its
+`[data-product-id]` / catalog anchor. To swap one, drop in a replacement at
+900×900 under the same filename; no markup changes needed. Adding a product
+means adding its `<img>` in both the homepage grid and the catalog entry.
 
 ## Bits worth stealing
 
